@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container d-flex justify-content-center mt-5">
+
+    <div class="card" style="width: 350px;">
+
+        <div class="card-header text-center">
+            <h4>Login</h4>
+        </div>
+
+        <div class="card-body">
+
+            <div class="text-center mb-3">
+                <img src="/img/login.png" width="60">
+            </div>
+
+            <form>
+
+                <label class="form-label">Usuario</label>
+                <input type="text" class="form-control" placeholder="websoft@tuorg.com">
+
+                <label class="form-label mt-3">Contraseña</label>
+                <input type="password" class="form-control">
+
+                <button class="btn btn-primary mt-3">Entrar</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

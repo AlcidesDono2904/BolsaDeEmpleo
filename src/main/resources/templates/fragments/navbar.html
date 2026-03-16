@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navbar">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" href="/">
+      <img src="/img/empleo.png" width="30" class="me-2">
+      BolsaEmpleo
+    </a>
+
+    <div class="navbar-nav">
+      <a class="nav-link" href="/puestos/buscar-por-caracteristicas">Buscar puestos</a>
+      <a class="nav-link" href="/registro-empresa">Registro Empresa</a>
+      <a class="nav-link" href="/registro-oferente">Registro Oferente</a>
+    </div>
+
+    <div class="ms-auto">
+      <a class="nav-link text-white" href="/login">Login</a>
+    </div>
+
+  </div>
+</nav>
+
+</body>
+</html>
