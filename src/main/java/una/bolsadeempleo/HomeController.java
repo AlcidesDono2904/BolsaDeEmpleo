@@ -47,6 +47,9 @@ public class HomeController {
     @GetMapping("/empresa/candidatos/detalle")
     public String detalleCandidato() { return "empresa/detalle-candidato"; }
 
+    @GetMapping("/empresa/publicar/puesto")
+    public String publicarPuesto() { return "empresa/publicar-puesto"; }
+
     //-----------------------------OFERENTE--------------------------------------------
     @GetMapping("/oferente")
     public String dashboardOferente() { return "oferente/oferente-dashboard"; }
