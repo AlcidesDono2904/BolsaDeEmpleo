@@ -17,12 +17,12 @@ public class HomeController {
         return "buscar-puestos";
     }
 
-    @GetMapping("/registro-empresa")
+    @GetMapping("empresa/registro-empresa")
     public String empresa() {
         return "registro-empresa";
     }
 
-    @GetMapping("/registro-oferente")
+    @GetMapping("oferente/registro-oferente")
     public String oferente() {
         return "registro-oferente";
     }
