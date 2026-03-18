@@ -60,6 +60,9 @@ public class Oferente {
     @OneToMany(mappedBy = "idOferente")
     private Set<OferenteHabilidad> oferenteHabilidads = new LinkedHashSet<>();
 
+    public Oferente() {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -147,4 +150,6 @@ public class Oferente {
     public void setOferenteHabilidads(Set<OferenteHabilidad> oferenteHabilidads) {
         this.oferenteHabilidads = oferenteHabilidads;
     }
+
+
 }

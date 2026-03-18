@@ -21,6 +21,14 @@ public class Nacionalidad {
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
+    public Nacionalidad() {
+    }
+
+    public Nacionalidad(String nombre) {
+        this.nombre = nombre;
+    }
+
+
     public Integer getId() {
         return id;
     }
