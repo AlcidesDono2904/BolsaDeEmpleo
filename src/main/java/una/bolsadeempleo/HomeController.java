@@ -45,7 +45,7 @@ public class HomeController {
     public String registroOferente(HttpServletRequest req, @ModelAttribute Oferente oferente, @ModelAttribute Usuario usuario) {
 
 
-        return "redirect:index";
+        return "redirect:/";
     }
 
     @GetMapping("/login")
@@ -55,15 +55,17 @@ public class HomeController {
 
     @PostMapping("/login")
     public String procesarLogin(HttpServletRequest req) {
-        if (req.getAttribute("usuario") != null &&
-            (req.getAttribute("password") != null)){
+        if (req.getParameter("correo") == null ||
+            (req.getParameter("password") == null)){
+
             return "login";
         }
-
-        if (service.findUsuarioByCorreoAndPassword(req.getParameter("correo"), req.getParameter("password")) != null) {
-            req.getSession().setAttribute("usuario", req.getAttribute("usuario").toString());
-            System.out.println("Usuario logueado: " + req.getAttribute("usuario").toString());
-            return "redirect:/index";
+        Usuario usuario = service.findUsuarioByCorreoAndPassword(req.getParameter("correo"), req.getParameter("password"));
+        if (usuario != null) {
+            req.getSession().setAttribute("usuario", usuario.getId());
+            System.out.println("Usuario logueado: " + req.getParameter("correo"));
+            System.out.println(usuario.getId());
+            return "redirect:/";
         }
         return "login";
     }
