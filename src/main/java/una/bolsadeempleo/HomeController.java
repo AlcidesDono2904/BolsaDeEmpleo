@@ -1,11 +1,25 @@
 package una.bolsadeempleo;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import una.bolsadeempleo.logic.Nacionalidad;
+import una.bolsadeempleo.logic.Oferente;
+import una.bolsadeempleo.logic.Service;
+import una.bolsadeempleo.logic.Usuario;
 
 @Controller
 public class HomeController {
-//---------------------------PARTE PUBLICA-------------------------------------------
+    private final Service service;
+
+    public HomeController(Service service) {
+        this.service = service;
+    }
+
+    //---------------------------PARTE PUBLICA-------------------------------------------
     @GetMapping("/")
     public String inicio(Model model) {
         model.addAttribute("titulo", "Bolsa de Empleo");
@@ -27,10 +41,36 @@ public class HomeController {
         return "registro-oferente";
     }
 
+    @PostMapping("oferente/registro-oferente")
+    public String registroOferente(HttpServletRequest req, @ModelAttribute Oferente oferente, @ModelAttribute Usuario usuario) {
+
+
+        return "redirect:/";
+    }
+
     @GetMapping("/login")
     public String login() {
         return "login";
     }
+
+    @PostMapping("/login")
+    public String procesarLogin(HttpServletRequest req) {
+        if (req.getParameter("correo") == null ||
+            (req.getParameter("password") == null)){
+
+            return "login";
+        }
+        Usuario usuario = service.findUsuarioByCorreoAndPassword(req.getParameter("correo"), req.getParameter("password"));
+        if (usuario != null) {
+            req.getSession().setAttribute("usuario", usuario.getId());
+            System.out.println("Usuario logueado: " + req.getParameter("correo"));
+            System.out.println(usuario.getId());
+            return "redirect:/";
+        }
+        return "login";
+    }
+
+
 
     //--------------------------------------EMPRESA------------------------------------
     @GetMapping("/empresa")
