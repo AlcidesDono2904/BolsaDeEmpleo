@@ -1,0 +1,9 @@
+<form action="/empresa/guardar" method="post">
+    <input type="text" name="nombre" placeholder="Nombre" required>
+    <input type="text" name="localizacion" placeholder="Localización">
+    <input type="email" name="correo" placeholder="Correo">
+    <input type="text" name="telefono" placeholder="Teléfono">
+    <textarea name="descripcion"></textarea>
+    <input type="password" name="clave" placeholder="Clave">
+    <button type="submit">Registrar</button>
+</form>
