@@ -1,12 +1,10 @@
-package una.bolsadeempleo;
+package una.bolsadeempleo.controller;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import una.bolsadeempleo.logic.Nacionalidad;
 import una.bolsadeempleo.logic.Oferente;
 import una.bolsadeempleo.logic.Service;
 import una.bolsadeempleo.logic.Usuario;
@@ -43,8 +41,6 @@ public class HomeController {
 
     @PostMapping("oferente/registro-oferente")
     public String registroOferente(HttpServletRequest req, @ModelAttribute Oferente oferente, @ModelAttribute Usuario usuario) {
-
-
         return "redirect:/";
     }
 
@@ -65,15 +61,14 @@ public class HomeController {
             req.getSession().setAttribute("usuario", usuario.getId());
             System.out.println("Usuario logueado: " + req.getParameter("correo"));
             System.out.println(usuario.getId());
-            return "redirect:/";
+            return "redirect:/empresa/dashboard";
         }
         return "login";
     }
 
 
-
     //--------------------------------------EMPRESA------------------------------------
-    @GetMapping("/empresa")
+    @GetMapping("/empresa/dashboard")
     public String dashboardEmpresa() { return "empresa/empresa-dashboard"; }
 
     @GetMapping("/empresa/puestos")
