@@ -1,13 +1,20 @@
 package una.bolsadeempleo.controller;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import una.bolsadeempleo.logic.Oferente;
+import una.bolsadeempleo.logic.Puesto;
 import una.bolsadeempleo.logic.Service;
 import una.bolsadeempleo.logic.Usuario;
+import una.bolsadeempleo.repository.PuestoRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -24,10 +31,44 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/puestos/buscar-por-caracteristicas")
-    public String buscarPuestos() {
+    @Autowired
+    private PuestoRepository puestoRepository;
+
+    //INDEX PUESTOS
+    @GetMapping("/Inicio")
+    public String index(Model model) {
+
+        var puestos = puestoRepository
+                .findTop5ByTipoPublicacionAndActivoOrderByFechaPublicacionDesc("PUBLICO", true);
+
+        model.addAttribute("puestos", puestos);
+
+        return "index";
+    }
+
+    @GetMapping("/puestos/buscar")
+    public String buscar(@RequestParam(required = false) String[] caracteristicas,
+                         Model model) {
+
+        List<Puesto> resultados = new ArrayList<>();
+
+        if (caracteristicas != null && caracteristicas.length > 0) {
+            for (String c : caracteristicas) {
+                resultados.addAll(
+                        puestoRepository.findByDescripcionContainingIgnoreCase(c)
+                );
+            }
+        } else {
+            resultados = puestoRepository.findAll();
+        }
+        model.addAttribute("puestos", resultados);
         return "buscar-puestos";
     }
+
+    //@GetMapping("/puestos/buscar-por-caracteristicas")
+    //public String buscarPuestos() {
+      //  return "buscar-puestos";
+    //}
 
     @GetMapping("empresa/registro-empresa")
     public String empresa() {

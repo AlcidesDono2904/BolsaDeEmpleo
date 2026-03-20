@@ -20,25 +20,34 @@
 
     <div class="card p-3">
 
-        <form>
+        <form method="get" action="/buscar">
 
-            <label><input type="checkbox"> Motores</label><br>
+            <label><input type="checkbox" name="caracteristicas" value="Motores">
+                Motores</label><br>
 
-            <label class="ms-3"><input type="checkbox"> MySql</label><br>
-            <label class="ms-3"><input type="checkbox"> Oracle</label><br>
+            <label class="ms-3"><input type="checkbox" name="caracteristicas" value="MySql">
+                MySql</label><br>
+            <label class="ms-3"><input type="checkbox" name="caracteristicas" value="Oracle">
+                Oracle</label><br>
 
-            <label><input type="checkbox"> Ciberseguridad</label><br>
+            <label><input type="checkbox" name="caracteristicas" value="Ciberseguridad">
+                Ciberseguridad</label><br>
 
-            <label><input type="checkbox"> Lenguajes de programación</label><br>
+            <label><input type="checkbox" name="caracteristicas" value="Lenguajes">
+                Lenguajes de programación</label><br>
 
-            <label class="ms-3"><input type="checkbox"> C#</label><br>
-            <label class="ms-3"><input type="checkbox"> Java</label><br>
-            <label class="ms-3"><input type="checkbox"> Kotlin</label><br>
+            <label class="ms-3"><input type="checkbox" name="caracteristicas" value="C#">
+                C#</label><br>
+            <label class="ms-3"><input type="checkbox" name="caracteristicas" value="Java">
+                Java</label><br>
+            <label class="ms-3"><input type="checkbox" name="caracteristicas" value="Kotlin">
+                Kotlin</label><br>
 
-            <label><input type="checkbox"> Tecnologías Web</label><br><br>
+            <label><input type="checkbox" name="caracteristicas" value="Web">
+                Tecnologías Web</label><br><br>
 
             <button class="btn btn-primary">Buscar</button>
-            <button class="btn btn-secondary">Limpiar</button>
+            <button type="reset" class="btn btn-secondary">Limpiar</button>
 
         </form>
 
@@ -46,11 +55,19 @@
 
     <h5 class="mt-4">Resultados</h5>
 
-    <div class="card p-3 col-md-3">
+    <div class="row mt-3">
 
-        <strong>Web Soft</strong><br>
-        Frontend Developer<br>
-        <b>Salario: 1200</b>
+        <div class="col-md-3 mb-3" th:each="p : ${puestos}">
+            <div class="card p-3">
+
+                <strong th:text="${p.idEmpresa.nombre}">Empresa</strong><br>
+
+                <span th:text="${p.descripcion}">Descripcion</span><br>
+
+                <b>Salario: <span th:text="${p.salarioUsd}"></span></b>
+
+            </div>
+        </div>
 
     </div>
 
@@ -62,3 +79,4 @@
 
 </body>
 </html>
+
