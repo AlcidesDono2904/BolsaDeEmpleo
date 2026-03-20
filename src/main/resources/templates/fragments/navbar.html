@@ -17,7 +17,19 @@
     </div>
 
     <div class="ms-auto">
-      <a class="nav-link text-white" href="/login">Login</a>
+      <div th:if="${session.usuario == null}">
+        <a class="nav-link text-white" href="/login">Login</a>
+      </div>
+      <div th:if="${session.usuario != null}"  class="d-flex gap-3 align-items-center">
+        <div class="p-2">
+          <span class="nav-link text-white" th:text="${session.usuario.correo}"></span>
+        </div>
+        <div class="p-2">
+          <form th:action="@{/logout}" method="post">
+            <button type="submit">Sign out</button>
+          </form>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -25,3 +37,5 @@
 
 </body>
 </html>
+
+<!-- Si HAY usuario -->
