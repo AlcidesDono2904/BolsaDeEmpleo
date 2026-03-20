@@ -60,6 +60,7 @@ public class HomeController {
             req.getSession().setAttribute("usuario", usuario);
             System.out.println("Usuario logueado: " + req.getParameter("correo"));
             System.out.println(usuario.getId());
+
             return "redirect:/empresa/dashboard";
         }
         return "login";
@@ -85,7 +86,7 @@ public class HomeController {
     public String publicarPuesto() { return "empresa/publicar-puesto"; }
 
     //-----------------------------OFERENTE--------------------------------------------
-    @GetMapping("/oferente")
+    @GetMapping("/oferente/dashboard")
     public String dashboardOferente() { return "oferente/oferente-dashboard"; }
 
     @GetMapping("/oferente/habilidades")
