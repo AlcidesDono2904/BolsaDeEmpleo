@@ -18,13 +18,13 @@
 
         <h3>Registro de Oferente</h3>
 
-        <form class="mt-4">
+        <form class="mt-4" th:action="@{/oferente/guardar}" method="post">
 
-            <div class="row">
+            <div class="row" >
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Identificación</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="identificacion">
                 </div>
 
                 <div class="col-md-6 mb-3">
@@ -42,12 +42,12 @@
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Nombre</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="nombre">
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Apellido</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="apellido">
                 </div>
 
             </div>
@@ -56,12 +56,12 @@
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Teléfono</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="telefono">
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Lugar de residencia</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="residencia">
                 </div>
 
             </div>
@@ -70,12 +70,12 @@
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Correo</label>
-                    <input type="email" class="form-control">
+                    <input type="email" class="form-control" name="correo">
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Clave</label>
-                    <input type="password" class="form-control">
+                    <input type="password" class="form-control" name="password">
                 </div>
 
             </div>
