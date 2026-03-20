@@ -53,12 +53,11 @@ public class HomeController {
     public String procesarLogin(HttpServletRequest req) {
         if (req.getParameter("correo") == null ||
             (req.getParameter("password") == null)){
-
             return "login";
         }
         Usuario usuario = service.findUsuarioByCorreoAndPassword(req.getParameter("correo"), req.getParameter("password"));
         if (usuario != null) {
-            req.getSession().setAttribute("usuario", usuario.getId());
+            req.getSession().setAttribute("usuario", usuario);
             System.out.println("Usuario logueado: " + req.getParameter("correo"));
             System.out.println(usuario.getId());
             return "redirect:/empresa/dashboard";
