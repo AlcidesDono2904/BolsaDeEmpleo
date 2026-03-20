@@ -23,7 +23,7 @@ public class EmpresaController {
     // Mostrar formulario
     @GetMapping("/registro")
     public String mostrarFormulario() {
-        return "empresa/registro-empresa";
+        return "/registro-empresa";
     }
 
     // Guardar en BD
