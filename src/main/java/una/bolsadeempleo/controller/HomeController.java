@@ -55,6 +55,13 @@ public class HomeController {
             (req.getParameter("password") == null)){
             return "login";
         }
+
+        if (req.getParameter("correo").equals("admin@admin.com") &&
+                req.getParameter("password").equals("123")) {
+
+            return "redirect:/admin/dashboard";
+        }
+
         Usuario usuario = service.findUsuarioByCorreoAndPassword(req.getParameter("correo"), req.getParameter("password"));
         if (usuario != null) {
             req.getSession().setAttribute("usuario", usuario);
@@ -71,6 +78,11 @@ public class HomeController {
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest req) {
+        req.getSession().invalidate(); // elimina la sesión
+        return "redirect:/login";
+    }
 
     //--------------------------------------EMPRESA------------------------------------
     @GetMapping("/empresa/dashboard")
@@ -98,7 +110,7 @@ public class HomeController {
     public String dashboardHabilidades() { return "oferente/habilidades"; }
 
     //------------------------ADMINISTRADOR---------------------------------------------
-    @GetMapping("/admin")
+    @GetMapping("/admin/dashboard")
     public String administrador() {
         return "admin/admin-dashboard";
     }
