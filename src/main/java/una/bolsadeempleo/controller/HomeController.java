@@ -60,8 +60,13 @@ public class HomeController {
             req.getSession().setAttribute("usuario", usuario);
             System.out.println("Usuario logueado: " + req.getParameter("correo"));
             System.out.println(usuario.getId());
-
-            return "redirect:/empresa/dashboard";
+            if (usuario.getRol().equals("EMPRESA")) {
+                return "redirect:/empresa/dashboard";
+            } else if (usuario.getRol().equals("OFERENTE")) {
+                return "redirect:/oferente/dashboard";
+            } else if (usuario.getRol().equals("ADMIN")) {
+                return "redirect:/admin/dashboard";
+            }
         }
         return "login";
     }
