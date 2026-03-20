@@ -9,7 +9,9 @@ import una.bolsadeempleo.repository.UsuarioRepository;
 public class Service {
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
     private OferenteRepository oferenteRepository;
+    @Autowired
     private EmpresaRepository empresaRepository;
 
     // --- Usuario ---
