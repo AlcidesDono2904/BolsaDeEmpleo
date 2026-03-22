@@ -113,7 +113,7 @@ public class HomeController {
             } else if (usuario.getRol().equals("OFERENTE")) {
                 return "redirect:/oferente/dashboard";
             } else if (usuario.getRol().equals("ADMIN")) {
-                return "redirect:/admin/dashboard";
+                return "redirect:/admin/admin-dashboard";
             }
         }
         return "login";
@@ -150,24 +150,4 @@ public class HomeController {
     @GetMapping("/oferente/habilidades")
     public String dashboardHabilidades() { return "oferente/habilidades"; }
 
-    //------------------------ADMINISTRADOR---------------------------------------------
-    @GetMapping("/admin/dashboard")
-    public String administrador() {
-        return "admin/admin-dashboard";
-    }
-
-    @GetMapping("/admin/empresas/pendientes")
-    public String empresasPendientes() {
-        return "admin/empresas-pendientes";
-    }
-
-    @GetMapping("/admin/oferentes/pendientes")
-    public String oferentesPendientes() {
-        return "admin/oferentes-pendientes";
-    }
-
-    @GetMapping("/admin/caracteristicas")
-    public String caracteristicas() {
-        return "admin/caracteristicas";
-    }
 }
