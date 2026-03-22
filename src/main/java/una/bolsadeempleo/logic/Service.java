@@ -1,12 +1,9 @@
 package una.bolsadeempleo.logic;
 
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.beans.factory.annotation.Autowired;
 import una.bolsadeempleo.repository.EmpresaRepository;
 import una.bolsadeempleo.repository.OferenteRepository;
 import una.bolsadeempleo.repository.UsuarioRepository;
-
-import java.util.List;
 
 @org.springframework.stereotype.Service("service")
 public class Service {
@@ -19,12 +16,6 @@ public class Service {
 
     // --- Usuario ---
     public Usuario saveUsuario(Usuario usuario) {
-        String passwordPlano = usuario.getPasswordHash();
-        String passwordHash = BCrypt.hashpw(passwordPlano, BCrypt.gensalt());
-
-        usuario.setPasswordHash(passwordHash);
-
-        usuarioRepository.save(usuario);
         return usuarioRepository.save(usuario);
     }
 
@@ -45,14 +36,5 @@ public class Service {
     }
 
     // --- Oferente ---
-
-    // --- Empresa ---
-
-
-    // --- ADMIN ---
-    public List<Empresa> listarEmpresasPendientes() {
-        return empresaRepository.findByIdUsuarioAprobadoFalse();
-    }
-
 
 }
