@@ -24,7 +24,6 @@ public class Service {
 
         usuario.setPasswordHash(passwordHash);
 
-        usuarioRepository.save(usuario);
         return usuarioRepository.save(usuario);
     }
 
