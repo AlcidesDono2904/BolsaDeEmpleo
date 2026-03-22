@@ -6,6 +6,8 @@
   <meta charset="UTF-8">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 
 </head>
 
@@ -27,29 +29,26 @@
         <th>Acción</th>
       </tr>
       </thead>
-
-      <tbody>
-
-      <tr>
-        <td>rrhh@softlab.com</td>
-
-        <td>
-          <button class="btn btn-success btn-sm">
-            Aprobar y generar clave
-          </button>
-        </td>
-
-      </tr>
-
+      <tbody class="table-group-divider">
+        <tr th:each="actual : ${lista}">
+            <td th:text="${actual.IdUsuario.correo}">Usuario</td>
+            <td>
+                <a class="btn btn-success btn-sm" th:href="@{/admin/generar-clave(id=${actual.idUsuario.id})}">
+                Aprobar y generar clave
+                </a>
+            </td>
+        </tr>
       </tbody>
-
     </table>
-
   </div>
 
 </main>
 
-<div th:replace="fragments/footer :: footer"></div>
+
+<footer>
+  <div th:replace="fragments/footer :: footer"></div>
+</footer>
+
 
 </body>
 </html>
