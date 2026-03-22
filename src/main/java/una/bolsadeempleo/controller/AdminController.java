@@ -51,7 +51,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin/empresas-pendientes")
-    public String usuarios(Model model) {
+    public String empresasPendientes(Model model) {
         String redireccion = validarAdmin();
         if (redireccion != null) {
             return redireccion;
@@ -60,6 +60,18 @@ public class AdminController {
         model.addAttribute("urlAccion", "/admin/aprobar-usuario");
 
         return "/admin/empresas-pendientes";
+    }
+
+    @GetMapping("/admin/oferentes-pendientes")
+    public String oferentesPendientes(Model model) {
+        String redireccion = validarAdmin();
+        if (redireccion != null) {
+            return redireccion;
+        }
+        model.addAttribute("lista", service.listarOferentesPendientes());
+        model.addAttribute("urlAccion", "/admin/aprobar-usuario");
+
+        return "/admin/oferentes-pendientes";
     }
 
     @PostMapping("/admin/aprobar-usuario")
@@ -72,7 +84,7 @@ public class AdminController {
         usuario = service.findUsuarioById(usuario.getId());
         usuario.setAprobado(true);
         service.saveUsuario(usuario);
-        return "redirect:/admin/empresas-pendientes";
+        return "redirect:/admin/admin-dashboard";
     }
 
     @GetMapping("/admin/generar-clave")

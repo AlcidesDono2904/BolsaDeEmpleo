@@ -12,38 +12,14 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <main class="flex-fill">
-
   <div class="container mt-4">
-
     <h3>Empresas pendientes</h3>
-
-    <table class="table table-striped mt-3">
-
-      <thead>
-      <tr>
-        <th>Usuario</th>
-        <th>Acción</th>
-      </tr>
-      </thead>
-      <tbody class="table-group-divider">
-        <tr th:each="actual : ${lista}">
-            <td th:text="${actual.IdUsuario.correo}">Usuario</td>
-            <td>
-                <a class="btn btn-success btn-sm" th:href="@{/admin/generar-clave(id=${actual.idUsuario.id})}">
-                Aprobar y generar clave
-                </a>
-            </td>
-        </tr>
-      </tbody>
-    </table>
+    <div th:replace="fragments/listarPendientes :: listarPendientes"></div>
   </div>
-
 </main>
-
 
 <footer>
   <div th:replace="fragments/footer :: footer"></div>

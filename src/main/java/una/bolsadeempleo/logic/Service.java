@@ -44,6 +44,9 @@ public class Service {
     }
 
     // --- Oferente ---
+    public List<Oferente> listarOferentesPendientes() {
+        return oferenteRepository.findByIdUsuarioAprobadoFalse();
+    }
 
     // --- Empresa ---
 

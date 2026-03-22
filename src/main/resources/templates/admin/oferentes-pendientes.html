@@ -16,35 +16,8 @@
 <main class="flex-fill">
 
     <div class="container mt-4">
-
         <h3>Oferentes pendientes</h3>
-
-        <table class="table table-striped mt-3">
-
-            <thead>
-            <tr>
-                <th>Usuario</th>
-                <th>Acción</th>
-            </tr>
-            </thead>
-
-            <tbody>
-
-            <tr>
-                <td>rrhh@softlab.com</td>
-
-                <td>
-                    <button class="btn btn-success btn-sm">
-                        Aprobar y generar clave
-                    </button>
-                </td>
-
-            </tr>
-
-            </tbody>
-
-        </table>
-
+        <div th:replace="fragments/listarPendientes :: listarPendientes"></div>
     </div>
 
 </main>
