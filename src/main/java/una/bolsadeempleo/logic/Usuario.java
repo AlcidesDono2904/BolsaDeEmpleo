@@ -53,20 +53,6 @@ public class Usuario {
     @OneToMany(mappedBy = "idUsuario")
     private Set<Oferente> oferentes = new LinkedHashSet<>();
 
-    public Usuario() {
-    }
-
-    public Usuario(String correo, String passwordHash, String rol, Boolean aprobado, Instant fechaRegistro, Set<Administrador> administradors, Set<Empresa> empresas, Set<Oferente> oferentes) {
-        this.correo = correo;
-        this.passwordHash = passwordHash;
-        this.rol = rol;
-        this.aprobado = aprobado;
-        this.fechaRegistro = fechaRegistro;
-        this.administradors = administradors;
-        this.empresas = empresas;
-        this.oferentes = oferentes;
-    }
-
     public Integer getId() {
         return id;
     }
