@@ -70,4 +70,7 @@ public class Service {
         return caracteristicaRepository.findById(id).orElse(null);
     }
 
+    public void saveCaracteristica(Caracteristica caracteristica) {
+        caracteristicaRepository.save(caracteristica);
+    }
 }

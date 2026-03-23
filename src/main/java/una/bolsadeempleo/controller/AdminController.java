@@ -118,4 +118,14 @@ public class AdminController {
         model.addAttribute("caracteristicas", service.listarCaracteristicas(caracteristica));
         return "/admin/caracteristicas";
     }
+
+    @PostMapping("/admin/agregarCaracteristica")
+    public String agregarCaracteristica(@Valid @ModelAttribute Caracteristica caracteristica) {
+        String redireccion = validarAdmin();
+        if (redireccion != null) {
+            return redireccion;
+        }
+        service.saveCaracteristica(caracteristica);
+        return "redirect:/admin/caracteristicas?idPadre=" + (caracteristica.getIdPadre() != null ? caracteristica.getIdPadre().getId() : "");
+    }
 }
