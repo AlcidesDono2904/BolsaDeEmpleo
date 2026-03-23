@@ -28,6 +28,7 @@
                 <div class="card p-3" style="background-color:#e8f5e9">
 
                     <b>Ruta:</b>
+                    <p></p>
 
                     <div class="mt-2">
                         <span class="badge bg-secondary">Raíces</span>
@@ -36,42 +37,16 @@
                     <p class="mt-2 text-muted">Categorías: raíces</p>
 
                     <table class="table table-sm">
-
-                        <tr>
-                            <td>Bases de Datos</td>
+                        <tr th:each="caracteristica : ${caracteristicas}">
+                            <td th:text="${caracteristica.nombre}"></td>
                             <td class="text-end">
-                                <button class="btn btn-outline-primary btn-sm">Entrar</button>
+                                <a class="btn btn-outline-primary btn-sm"
+                                        th:href="@{/admin/caracteristicas(idPadre=${caracteristica.id})}"
+                                >
+                                    Entrar
+                                </a>
                             </td>
                         </tr>
-
-                        <tr>
-                            <td>Ciberseguridad</td>
-                            <td class="text-end">
-                                <button class="btn btn-outline-primary btn-sm">Entrar</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Lenguajes de programación</td>
-                            <td class="text-end">
-                                <button class="btn btn-outline-primary btn-sm">Entrar</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Tecnologías Web</td>
-                            <td class="text-end">
-                                <button class="btn btn-outline-primary btn-sm">Entrar</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Testing</td>
-                            <td class="text-end">
-                                <button class="btn btn-outline-primary btn-sm">Entrar</button>
-                            </td>
-                        </tr>
-
                     </table>
 
                 </div>

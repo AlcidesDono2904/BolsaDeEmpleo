@@ -2,6 +2,7 @@ package una.bolsadeempleo.logic;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import una.bolsadeempleo.repository.CaracteristicaRepository;
 import una.bolsadeempleo.repository.EmpresaRepository;
 import una.bolsadeempleo.repository.OferenteRepository;
 import una.bolsadeempleo.repository.UsuarioRepository;
@@ -16,6 +17,8 @@ public class Service {
     private OferenteRepository oferenteRepository;
     @Autowired
     private EmpresaRepository empresaRepository;
+    @Autowired
+    private CaracteristicaRepository caracteristicaRepository;
 
     // --- Usuario ---
     public Usuario saveUsuario(Usuario usuario) {
@@ -56,5 +59,15 @@ public class Service {
         return empresaRepository.findByIdUsuarioAprobadoFalse();
     }
 
+    public List<Caracteristica> listarCaracteristicas(Caracteristica caracteristica) {
+        if (caracteristica.getId() == null) {
+            return caracteristicaRepository.findAll();
+        }
+        return caracteristicaRepository.findByIdPadre(caracteristica);
+    }
+
+    public Caracteristica findCaracteristicaById(Integer id) {
+        return caracteristicaRepository.findById(id).orElse(null);
+    }
 
 }

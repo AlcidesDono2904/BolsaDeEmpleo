@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import una.bolsadeempleo.logic.Caracteristica;
 import una.bolsadeempleo.logic.Empresa;
 import una.bolsadeempleo.logic.Service;
 import una.bolsadeempleo.logic.Usuario;
@@ -57,7 +58,6 @@ public class AdminController {
             return redireccion;
         }
         model.addAttribute("lista", service.listarEmpresasPendientes());
-        model.addAttribute("urlAccion", "/admin/aprobar-usuario");
 
         return "/admin/empresas-pendientes";
     }
@@ -69,7 +69,6 @@ public class AdminController {
             return redireccion;
         }
         model.addAttribute("lista", service.listarOferentesPendientes());
-        model.addAttribute("urlAccion", "/admin/aprobar-usuario");
 
         return "/admin/oferentes-pendientes";
     }
@@ -96,5 +95,21 @@ public class AdminController {
         Usuario usuario = service.findUsuarioById(id);
         model.addAttribute("usuario", usuario);
         return "/admin/generar-clave";
+    }
+
+    @GetMapping("/admin/caracteristicas")
+    public String mostrarCaracteristicas(Model model, @RequestParam(required = false) Integer idPadre) {
+        String redireccion = validarAdmin();
+        if (redireccion != null) {
+            return redireccion;
+        }
+        Caracteristica caracteristica = new Caracteristica();
+        if (idPadre != null) {
+            caracteristica.setId(idPadre);
+            model.addAttribute("caracteristicaPadre", service.findCaracteristicaById(idPadre));
+        }
+
+        model.addAttribute("caracteristicas", service.listarCaracteristicas(caracteristica));
+        return "/admin/caracteristicas";
     }
 }
