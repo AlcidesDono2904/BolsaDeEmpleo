@@ -92,6 +92,12 @@ public class HomeController {
 
     @PostMapping("/login")
     public String procesarLogin(HttpServletRequest req) {
+        // TODO remove dev login
+        if (true){
+            req.getSession().setAttribute("usuario", service.findUsuarioByCorreoAndPassword("abc@gmail.com", "123"));
+            return "redirect:/admin/admin-dashboard";
+        }
+
         if (req.getParameter("correo") == null ||
             (req.getParameter("password") == null)){
             return "login";

@@ -105,8 +105,14 @@ public class AdminController {
         }
         Caracteristica caracteristica = new Caracteristica();
         if (idPadre != null) {
-            caracteristica.setId(idPadre);
-            model.addAttribute("caracteristicaPadre", service.findCaracteristicaById(idPadre));
+
+            caracteristica = service.findCaracteristicaById(idPadre);
+            var lista = caracteristica.listarPadres();
+            model.addAttribute("caracteristicaSeleccionada", caracteristica);
+            model.addAttribute("caracteristicaArbol", lista);
+            for (Caracteristica c : lista) {
+                System.out.println("ID: " + c.getId() + " Nombre: " + c.getNombre());
+            }
         }
 
         model.addAttribute("caracteristicas", service.listarCaracteristicas(caracteristica));

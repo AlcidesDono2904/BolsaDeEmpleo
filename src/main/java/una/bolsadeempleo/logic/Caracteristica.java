@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 @Getter
@@ -61,5 +62,15 @@ public class Caracteristica {
 
     public void setCaracteristicas(Set<Caracteristica> caracteristicas) {
         this.caracteristicas = caracteristicas;
+    }
+
+    public LinkedList<Caracteristica> listarPadres() {
+        LinkedList<Caracteristica> resultado = new LinkedList<>();
+        Caracteristica actual = this;
+        while (actual != null) {
+            resultado.addFirst(actual);
+            actual = actual.getIdPadre();
+        }
+        return resultado;
     }
 }
