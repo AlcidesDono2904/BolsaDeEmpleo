@@ -5,9 +5,11 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import una.bolsadeempleo.repository.CaracteristicaRepository;
 import una.bolsadeempleo.repository.EmpresaRepository;
 import una.bolsadeempleo.repository.OferenteRepository;
+import una.bolsadeempleo.repository.PuestoRepository;
 import una.bolsadeempleo.repository.UsuarioRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service("service")
 public class Service {
@@ -19,6 +21,8 @@ public class Service {
     private EmpresaRepository empresaRepository;
     @Autowired
     private CaracteristicaRepository caracteristicaRepository;
+    @Autowired
+    private PuestoRepository puestoRepository;
 
     // --- Usuario ---
     public Usuario saveUsuario(Usuario usuario) {
@@ -52,13 +56,11 @@ public class Service {
     }
 
     // --- Empresa ---
-
-
-    // --- ADMIN ---
     public List<Empresa> listarEmpresasPendientes() {
         return empresaRepository.findByIdUsuarioAprobadoFalse();
     }
 
+    // --- Caracteristica ---
     public List<Caracteristica> listarCaracteristicas(Caracteristica caracteristica) {
         if (caracteristica.getId() == null) {
             return caracteristicaRepository.findAll();
@@ -70,4 +72,23 @@ public class Service {
         return caracteristicaRepository.findById(id).orElse(null);
     }
 
+    public void saveCaracteristica(Caracteristica caracteristica) {
+        caracteristicaRepository.save(caracteristica);
+    }
+
+    // --- Puesto ---
+    public List<Puesto> listarPuestosPorMes(Integer mes, Integer anio) {
+        List<Puesto> todosPuestos = puestoRepository.findAll();
+
+        return todosPuestos.stream()
+            .filter(p -> {
+                if (p.getFechaPublicacion() == null) return false;
+                java.time.YearMonth ym = java.time.YearMonth.from(
+                    p.getFechaPublicacion().atZone(java.time.ZoneId.systemDefault()).toLocalDateTime()
+                );
+                return ym.getYear() == anio && ym.getMonthValue() == mes;
+            })
+            .sorted((a, b) -> a.getIdEmpresa().getNombre().compareTo(b.getIdEmpresa().getNombre()))
+            .collect(Collectors.toList());
+    }
 }

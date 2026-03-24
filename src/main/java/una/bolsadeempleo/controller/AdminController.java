@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import una.bolsadeempleo.logic.Caracteristica;
 import una.bolsadeempleo.logic.Empresa;
+import una.bolsadeempleo.logic.Puesto;
 import una.bolsadeempleo.logic.Service;
 import una.bolsadeempleo.logic.Usuario;
+import una.bolsadeempleo.util.PdfReportGenerator;
+import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 public class AdminController {
@@ -117,5 +121,47 @@ public class AdminController {
 
         model.addAttribute("caracteristicas", service.listarCaracteristicas(caracteristica));
         return "/admin/caracteristicas";
+    }
+
+    @PostMapping("/admin/agregarCaracteristica")
+    public String agregarCaracteristica(@Valid @ModelAttribute Caracteristica caracteristica) {
+        String redireccion = validarAdmin();
+        if (redireccion != null) {
+            return redireccion;
+        }
+        service.saveCaracteristica(caracteristica);
+        return "redirect:/admin/caracteristicas?idPadre=" + (caracteristica.getIdPadre() != null ? caracteristica.getIdPadre().getId() : "");
+    }
+
+    @GetMapping("/admin/reportes-puestos")
+    public String mostrarReportes(Model model) {
+        String redireccion = validarAdmin();
+        if (redireccion != null) {
+            return redireccion;
+        }
+        return "/admin/reportes-puestos";
+    }
+
+    @PostMapping("/admin/descargar-reporte")
+    public String descargarReporte(@RequestParam Integer mes, @RequestParam Integer anio,
+                                  HttpServletResponse response) {
+        String redireccion = validarAdmin();
+        if (redireccion != null) {
+            return redireccion;
+        }
+
+        try {
+            List<Puesto> puestos = service.listarPuestosPorMes(mes, anio);
+            byte[] pdfBytes = PdfReportGenerator.generarReportePuestos(puestos, mes, anio);
+
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=reporte_puestos_" + mes + "_" + anio + ".pdf");
+            response.setContentLength(pdfBytes.length);
+            response.getOutputStream().write(pdfBytes);
+            response.getOutputStream().flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/admin/reportes-puestos";
     }
 }

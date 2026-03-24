@@ -68,31 +68,30 @@
             <!-- AGREGAR CARACTERISTICA -->
 
             <div class="col-md-5">
-
                 <div class="card p-3" style="background-color:#e8f5e9">
 
                     <h6>Agregar Característica</h6>
+                    <form action="/admin/agregarCaracteristica" method="POST">
 
-                    <form action="admin/agregarCaracteristica" method="POST"></form>
-                    <label class="form-label mt-2">Nombre</label>
-                    <input name="nombreCaracteristica" class="form-control">
+                        <label for="nombreCaracteristica" class="form-label mt-2">Nombre</label>
+                        <input name="nombre" class="form-control" id="nombreCaracteristica" required>
 
-                    <label for="selectPadre" class="form-label mt-3">Padre</label>
+                        <label for="selectPadre" class="form-label mt-3">Padre</label>
 
-                    <select class="form-select" id="selectPadre">
+                        <select class="form-select" id="selectPadre" name="idPadre">
 
-                        <option th:value="${null}">Sin padre</option>
+                            <option th:value="${null}">Sin padre</option>
 
-                        <option th:each="car : ${caracteristicas}"
-                                th:value="${car.id}"
-                                th:text="${car.nombre}">
-                        </option>
-                    </select>
+                            <option th:each="car : ${caracteristicas}"
+                                    th:value="${car.id}"
+                                    th:text="${car.nombre}">
+                            </option>
+                        </select>
 
-                    <button class="btn btn-primary mt-3">
-                        Crear
-                    </button>
-
+                        <button type="submit" class="btn btn-primary mt-3">
+                            Crear
+                        </button>
+                    </form>
                 </div>
 
             </div>
