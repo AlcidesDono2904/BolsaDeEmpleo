@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
     List<Empresa> findByIdUsuarioAprobadoFalse();
+
+    Empresa findByIdUsuarioId(Integer usuarioId);
 }

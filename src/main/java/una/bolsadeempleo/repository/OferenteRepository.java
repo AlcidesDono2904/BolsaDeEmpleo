@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface OferenteRepository extends JpaRepository<Oferente, Integer> {
     List<Oferente> findByIdUsuarioAprobadoFalse();
+
+    Oferente findByIdUsuarioId(Integer usuarioId);
 }

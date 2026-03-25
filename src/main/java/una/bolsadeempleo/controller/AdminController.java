@@ -78,15 +78,12 @@ public class AdminController {
     }
 
     @PostMapping("/admin/aprobar-usuario")
-    public String editarEmpresa(@ModelAttribute Usuario usuario) {
+    public String aprobarUsuario(@ModelAttribute Usuario usuario) {
         String redireccion = validarAdmin();
         if (redireccion != null) {
             return redireccion;
         }
-        System.out.println("ID a aprobar: " + usuario.getId());
-        usuario = service.findUsuarioById(usuario.getId());
-        usuario.setAprobado(true);
-        service.saveUsuario(usuario);
+        service.aprobarUsuario(usuario);
         return "redirect:/admin/admin-dashboard";
     }
 

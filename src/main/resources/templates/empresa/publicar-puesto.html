@@ -18,11 +18,33 @@
 
         <h3>Publicar Nuevo Puesto</h3>
 
-        <form class="mt-4">
+        <form class="mt-4" method="post" action="/empresa/guardar-puesto">
+
+            <div class="mb-4">
+                <label class="form-label">Características requeridas</label>
+
+                <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+
+                    <div class="form-check" th:each="c : ${caracteristicas}">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               name="caracteristicas"
+                               th:value="${c.id}"
+                               th:id="'carac_' + ${c.id}">
+
+                        <label class="form-check-label"
+                               th:for="'carac_' + ${c.id}"
+                               th:text="${c.nombre}">
+                            Característica
+                        </label>
+                    </div>
+
+                </div>
+            </div>
 
             <div class="mb-3">
                 <label class="form-label">Descripción del puesto</label>
-                <textarea class="form-control" rows="4"
+                <textarea name="descripcion" class="form-control" rows="4"
                           placeholder="Ej: Desarrollador Java con experiencia en Spring Boot"></textarea>
             </div>
 
@@ -30,14 +52,14 @@
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Salario (USD)</label>
-                    <input type="number" step="0.01" class="form-control" placeholder="Ej: 1200">
+                    <input name="salario" type="number" step="0.01" class="form-control" placeholder="Ej: 1200">
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Tipo de publicación</label>
-                    <select class="form-select">
-                        <option value="publica">Pública</option>
-                        <option value="privada">Privada</option>
+                    <select name="tipo" class="form-select">
+                        <option value="PUBLICO">Pública</option>
+                        <option value="PRIVADO">Privada</option>
                     </select>
                 </div>
 
@@ -46,6 +68,10 @@
             <div class="mt-3">
                 <button class="btn btn-success">Publicar Puesto</button>
                 <a href="/empresa/dashboard" class="btn btn-secondary">Cancelar</a>
+            </div>
+
+            <div th:if="${param.ok}" class="alert alert-success">
+                Puesto publicado con éxito
             </div>
 
         </form>
