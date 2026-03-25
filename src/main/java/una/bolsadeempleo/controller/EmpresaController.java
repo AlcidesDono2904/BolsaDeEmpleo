@@ -1,24 +1,16 @@
 package una.bolsadeempleo.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import una.bolsadeempleo.logic.Empresa;
-import una.bolsadeempleo.logic.Usuario;
-import una.bolsadeempleo.repository.EmpresaRepository;
-import una.bolsadeempleo.repository.UsuarioRepository;
+import una.bolsadeempleo.logic.Service;
 
 @Controller
 @RequestMapping("/empresa")
 public class EmpresaController {
-
     @Autowired
-    private EmpresaRepository empresaRepository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private Service service;
 
     // Mostrar formulario
     @GetMapping("/registro")
@@ -28,28 +20,14 @@ public class EmpresaController {
 
     // Guardar en BD
     @PostMapping("/guardar")
-    public String guardarEmpresa(HttpServletRequest req) {
+    public String guardarEmpresa(@RequestParam String correo,
+                                 @RequestParam String password,
+                                 @RequestParam String nombre,
+                                 @RequestParam String localizacion,
+                                 @RequestParam String telefono,
+                                 @RequestParam String descripcion) {
 
-        // aqui creamos usuario
-        Usuario usuario = new Usuario();
-        usuario.setCorreo(req.getParameter("correo"));
-        usuario.setPasswordHash(req.getParameter("password")); // luego se encripta
-        usuario.setRol("EMPRESA");
-        usuario.setAprobado(false);
-
-        usuarioRepository.save(usuario);
-
-        // aqui empresa
-        Empresa empresa = new Empresa();
-        empresa.setNombre(req.getParameter("nombre"));
-        empresa.setLocalizacion(req.getParameter("localizacion"));
-        empresa.setTelefono(req.getParameter("telefono"));
-        empresa.setDescripcion(req.getParameter("descripcion"));
-
-        // relacionar usuario
-        empresa.setIdUsuario(usuario);
-
-        empresaRepository.save(empresa);
+        service.guardarEmpresa(correo, password, nombre, localizacion, telefono, descripcion);
 
         return "redirect:/login";
     }

@@ -18,7 +18,6 @@ import java.util.Set;
 @Table(name = "puesto")
 public class Puesto {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_puesto", nullable = false)
@@ -127,5 +126,14 @@ public class Puesto {
 
     public void setPuestoCaracteristicas(Set<PuestoCaracteristica> puestoCaracteristicas) {
         this.puestoCaracteristicas = puestoCaracteristicas;
+    }
+
+    public String getCaracteristicasTexto() {
+        if (puestoCaracteristicas == null) return "";
+
+        return puestoCaracteristicas.stream()
+                .map(pc -> pc.getIdCaracteristica().getNombre())
+                .reduce((a, b) -> a + ", " + b)
+                .orElse("");
     }
 }

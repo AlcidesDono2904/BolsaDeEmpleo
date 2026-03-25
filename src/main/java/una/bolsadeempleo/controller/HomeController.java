@@ -1,5 +1,6 @@
 package una.bolsadeempleo.controller;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,50 +26,45 @@ public class HomeController {
     }
 
     //---------------------------PARTE PUBLICA-------------------------------------------
-    @GetMapping("/")
-    public String inicio(Model model) {
-        model.addAttribute("titulo", "Bolsa de Empleo");
-        return "index";
-    }
 
     @Autowired
     private PuestoRepository puestoRepository;
 
+    @Autowired
+    private HttpSession session;
+
     //INDEX PUESTOS
-    @GetMapping("/Inicio")
+    @GetMapping("/")
     public String index(Model model) {
 
-        var puestos = puestoRepository
-                .findTop5ByTipoPublicacionAndActivoOrderByFechaPublicacionDesc("PUBLICO", true);
+        var puestos = service.obtenerUltimosPuestos();
 
         model.addAttribute("puestos", puestos);
 
         return "index";
     }
 
+    //buscar puestos
     @GetMapping("/puestos/buscar")
-    public String buscar(@RequestParam(required = false) String[] caracteristicas,
-                         Model model) {
+    public String mostrarBusqueda(Model model) {
 
-        List<Puesto> resultados = new ArrayList<>();
+        model.addAttribute("caracteristicas", service.getTodasCaracteristicas());
+        model.addAttribute("puestos", new ArrayList<>()); // vacío al inicio
 
-        if (caracteristicas != null && caracteristicas.length > 0) {
-            for (String c : caracteristicas) {
-                resultados.addAll(
-                        puestoRepository.findByDescripcionContainingIgnoreCase(c)
-                );
-            }
-        } else {
-            resultados = puestoRepository.findAll();
-        }
-        model.addAttribute("puestos", resultados);
         return "buscar-puestos";
     }
 
-    //@GetMapping("/puestos/buscar-por-caracteristicas")
-    //public String buscarPuestos() {
-      //  return "buscar-puestos";
-    //}
+    @GetMapping("/buscar")
+    public String buscar(@RequestParam(required = false) List<Integer> caracteristicas,
+                         Model model) {
+
+        var resultados = service.buscarPuestosPorCaracteristicas(caracteristicas);
+
+        model.addAttribute("puestos", resultados);
+        model.addAttribute("caracteristicas", service.getTodasCaracteristicas());
+
+        return "buscar-puestos";
+    }
 
     @GetMapping("empresa/registro-empresa")
     public String empresa() {
@@ -90,6 +86,7 @@ public class HomeController {
         return "login";
     }
 
+    //login
     @PostMapping("/login")
     public String procesarLogin(HttpServletRequest req) {
         // TODO remove dev login
@@ -99,18 +96,22 @@ public class HomeController {
         }
 
         if (req.getParameter("correo") == null ||
-            (req.getParameter("password") == null)){
+                (req.getParameter("password") == null)){
             return "login";
         }
 
         if (req.getParameter("correo").equals("admin@admin.com") &&
                 req.getParameter("password").equals("123")) {
+            Usuario admin = new Usuario();
+            admin.setCorreo("admin@admin.com");
+            admin.setRol("ADMIN");
+            req.getSession().setAttribute("usuario", admin);
 
             return "redirect:/admin/dashboard";
         }
 
         Usuario usuario = service.findUsuarioByCorreoAndPassword(req.getParameter("correo"), req.getParameter("password"));
-        if (usuario != null) {
+        if (usuario != null && Boolean.TRUE.equals(usuario.getAprobado())) {
             req.getSession().setAttribute("usuario", usuario);
             System.out.println("Usuario logueado: " + req.getParameter("correo"));
             System.out.println(usuario.getId());
@@ -119,7 +120,7 @@ public class HomeController {
             } else if (usuario.getRol().equals("OFERENTE")) {
                 return "redirect:/oferente/dashboard";
             } else if (usuario.getRol().equals("ADMIN")) {
-                return "redirect:/admin/admin-dashboard";
+                return "redirect:/admin/dashboard";
             }
         }
         return "login";
@@ -130,30 +131,5 @@ public class HomeController {
         req.getSession().invalidate(); // elimina la sesión
         return "redirect:/login";
     }
-
-    //--------------------------------------EMPRESA------------------------------------
-    @GetMapping("/empresa/dashboard")
-    public String dashboardEmpresa() { return "empresa/empresa-dashboard"; }
-
-    @GetMapping("/empresa/puestos")
-    public String puestosEmpresa() {
-        return "empresa/puestos";
-    }
-
-    @GetMapping("/empresa/candidatos")
-    public String candidatosEmpresa() { return "empresa/candidatos"; }
-
-    @GetMapping("/empresa/candidatos/detalle")
-    public String detalleCandidato() { return "empresa/detalle-candidato"; }
-
-    @GetMapping("/empresa/publicar/puesto")
-    public String publicarPuesto() { return "empresa/publicar-puesto"; }
-
-    //-----------------------------OFERENTE--------------------------------------------
-    @GetMapping("/oferente/dashboard")
-    public String dashboardOferente() { return "oferente/oferente-dashboard"; }
-
-    @GetMapping("/oferente/habilidades")
-    public String dashboardHabilidades() { return "oferente/habilidades"; }
 
 }

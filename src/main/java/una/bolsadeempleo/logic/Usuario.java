@@ -27,7 +27,6 @@ public class Usuario {
     private String correo;
 
     @Size(max = 255)
-    @NotNull
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
