@@ -60,6 +60,14 @@ public class Service {
             usuarioRepository.save(usuario);
         }
     }
+
+    public Usuario login(String correo, String password) {
+        Usuario usuario = usuarioRepository.findByCorreo(correo);
+        if (usuario != null && BCrypt.checkpw(password, usuario.getPasswordHash())) {
+            return usuario;
+        }
+        return null;
+    }
     // --- INDEX ---
     public List<Puesto> obtenerUltimosPuestos() {
         return puestoRepository

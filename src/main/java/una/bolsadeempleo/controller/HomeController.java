@@ -2,6 +2,7 @@ package una.bolsadeempleo.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -89,17 +90,11 @@ public class HomeController {
     //login
     @PostMapping("/login")
     public String procesarLogin(HttpServletRequest req) {
-        // TODO remove dev login
-        if (true){
-            req.getSession().setAttribute("usuario", service.findUsuarioByCorreoAndPassword("abc@gmail.com", "123"));
-            return "redirect:/admin/admin-dashboard";
-        }
-
         if (req.getParameter("correo") == null ||
                 (req.getParameter("password") == null)){
             return "login";
         }
-
+/*
         if (req.getParameter("correo").equals("admin@admin.com") &&
                 req.getParameter("password").equals("123")) {
             Usuario admin = new Usuario();
@@ -108,19 +103,19 @@ public class HomeController {
             req.getSession().setAttribute("usuario", admin);
 
             return "redirect:/admin/dashboard";
-        }
+        }*/
 
-        Usuario usuario = service.findUsuarioByCorreoAndPassword(req.getParameter("correo"), req.getParameter("password"));
+        Usuario usuario =service.login(req.getParameter("correo"), req.getParameter("password"));
         if (usuario != null && Boolean.TRUE.equals(usuario.getAprobado())) {
             req.getSession().setAttribute("usuario", usuario);
             System.out.println("Usuario logueado: " + req.getParameter("correo"));
             System.out.println(usuario.getId());
             if (usuario.getRol().equals("EMPRESA")) {
-                return "redirect:/empresa/dashboard";
+                return "redirect:/empresa/empresa-dashboard";
             } else if (usuario.getRol().equals("OFERENTE")) {
-                return "redirect:/oferente/dashboard";
+                return "redirect:/oferente/oferente-dashboard";
             } else if (usuario.getRol().equals("ADMIN")) {
-                return "redirect:/admin/dashboard";
+                return "redirect:/admin/admin-dashboard";
             }
         }
         return "login";
