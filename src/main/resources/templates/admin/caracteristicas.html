@@ -86,20 +86,27 @@
 
                     <h6>Agregar Característica</h6>
 
-                    <label class="form-label mt-2">Nombre</label>
-                    <input class="form-control">
+                    <form method="post" action="/admin/caracteristicas/guardar">
 
-                    <label class="form-label mt-3">Padre</label>
+                        <label class="form-label mt-2">Nombre</label>
+                        <input class="form-control" name="nombre">
 
-                    <select class="form-select">
-                        <option>Bases de Datos</option>
-                        <option>Tecnologías Web</option>
-                        <option>Testing</option>
-                    </select>
+                        <label class="form-label mt-3">Padre</label>
 
-                    <button class="btn btn-primary mt-3">
-                        Crear
-                    </button>
+                        <select class="form-select" name="padreId">
+                            <option value="">-- Sin padre (raíz) --</option>
+
+                            <option th:each="c : ${caracteristicas}"
+                                    th:value="${c.id}"
+                                    th:text="${c.nombre}">
+                            </option>
+                        </select>
+
+                        <button class="btn btn-primary mt-3">
+                            Crear
+                        </button>
+
+                    </form>
 
                 </div>
 

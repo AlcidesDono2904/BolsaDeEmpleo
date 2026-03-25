@@ -33,29 +33,24 @@
 
       <tbody>
 
-      <tr>
-        <td>2</td>
-        <td>Full Stack Developer</td>
-        <td>2000.0</td>
-        <td><span class="badge bg-success">Sí</span></td>
+      <tr th:each="p : ${puestos}">
+
+        <td th:text="${p.id}">1</td>
+
+        <td th:text="${p.descripcion}">Descripción</td>
+
+        <td th:text="${p.salarioUsd}">0</td>
 
         <td>
-          <button class="btn btn-danger btn-sm">Desactivar</button>
-          <a href="/empresa/candidatos" class="btn btn-primary btn-sm">
-            Buscar candidatos
-          </a>
+    <span class="badge"
+          th:classappend="${p.activo} ? 'bg-success' : 'bg-danger'"
+          th:text="${p.activo} ? 'Sí' : 'No'">
+    </span>
         </td>
 
-      </tr>
-
-      <tr>
-        <td>1</td>
-        <td>Frontend Developer</td>
-        <td>1200.0</td>
-        <td><span class="badge bg-success">Sí</span></td>
-
         <td>
           <button class="btn btn-danger btn-sm">Desactivar</button>
+
           <a href="/empresa/candidatos" class="btn btn-primary btn-sm">
             Buscar candidatos
           </a>

@@ -58,4 +58,5 @@ public class PuestoCaracteristica {
     public void setNivelRequerido(@NotNull Integer nivelRequerido) {
         this.nivelRequerido = nivelRequerido;
     }
+
 }

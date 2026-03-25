@@ -30,15 +30,17 @@
 
             <tbody>
 
-            <tr>
-                <td>rrhh@softlab.com</td>
+            <tr th:each="u : ${oferentes}">
+                <td th:text="${u.correo}">correo</td>
 
                 <td>
-                    <button class="btn btn-success btn-sm">
-                        Aprobar y generar clave
-                    </button>
+                    <form th:action="@{/admin/aprobar}" method="post">
+                        <input type="hidden" name="id" th:value="${u.id}">
+                        <button class="btn btn-success btn-sm">
+                            Aprobar
+                        </button>
+                    </form>
                 </td>
-
             </tr>
 
             </tbody>

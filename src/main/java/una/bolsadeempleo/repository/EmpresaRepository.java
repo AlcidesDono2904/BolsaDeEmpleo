@@ -4,4 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import una.bolsadeempleo.logic.Empresa;
 
 public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
+    Empresa findByIdUsuarioId(Integer idUsuario);
 }
+
+
