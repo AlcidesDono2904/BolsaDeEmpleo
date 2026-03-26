@@ -238,6 +238,20 @@ public class Service {
         return puestoRepository.findByIdEmpresa(empresa);
     }
 
+    public void desactivarPuesto(Integer idPuesto, Integer idUsuario) {
+
+        Puesto puesto = puestoRepository.findById(idPuesto).orElse(null);
+        if (puesto == null) return;
+
+        // validar que el puesto pertenece a la empresa logueada
+        if (!puesto.getIdEmpresa().getIdUsuario().getId().equals(idUsuario)) {
+            return; // no permitir desactivar
+        }
+
+        puesto.setActivo(false);
+        puestoRepository.save(puesto);
+    }
+
     // --- Carcateristicas ---
     public void guardarCaracteristica(String nombre, Integer padreId) {
 

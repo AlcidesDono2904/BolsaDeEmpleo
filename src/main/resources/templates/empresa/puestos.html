@@ -49,7 +49,11 @@
         </td>
 
         <td>
-          <button class="btn btn-danger btn-sm">Desactivar</button>
+          <a th:href="@{/empresa/puesto/desactivar/{id}(id=${p.id})}"
+             class="btn btn-danger btn-sm"
+             onclick="return confirm('¿Desactivar este puesto?');">
+            Desactivar
+          </a>
 
           <a href="/empresa/candidatos" class="btn btn-primary btn-sm">
             Buscar candidatos
