@@ -51,7 +51,7 @@
         <td>
           <button class="btn btn-danger btn-sm">Desactivar</button>
 
-          <a href="/empresa/candidatos" class="btn btn-primary btn-sm">
+          <a th:href="@{/empresa/candidatos/buscar(idPuesto=${p.id})}" class="btn btn-primary btn-sm">
             Buscar candidatos
           </a>
         </td>

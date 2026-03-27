@@ -105,7 +105,7 @@ public class HomeController {
             return "redirect:/admin/dashboard";
         }*/
 
-        Usuario usuario =service.login(req.getParameter("correo"), req.getParameter("password"));
+        Usuario usuario = service.login(req.getParameter("correo"), req.getParameter("password"));
         if (usuario != null && Boolean.TRUE.equals(usuario.getAprobado())) {
             req.getSession().setAttribute("usuario", usuario);
             System.out.println("Usuario logueado: " + req.getParameter("correo"));

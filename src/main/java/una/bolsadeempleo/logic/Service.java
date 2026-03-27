@@ -5,8 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import una.bolsadeempleo.repository.*;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service("service")
@@ -29,11 +28,6 @@ public class Service {
 
     // --- Usuario ---
     public Usuario saveUsuario(Usuario usuario) {
-        String passwordPlano = usuario.getPasswordHash();
-        String passwordHash = BCrypt.hashpw(passwordPlano, BCrypt.gensalt());
-
-        usuario.setPasswordHash(passwordHash);
-
         return usuarioRepository.save(usuario);
     }
 
@@ -54,9 +48,12 @@ public class Service {
     }
 
     public void aprobarUsuario(Usuario u) {
+        String password = u.getPasswordHash();
         Usuario usuario = usuarioRepository.findById(u.getId()).orElse(null);
         if (usuario != null) {
             usuario.setAprobado(true);
+            String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
+            usuario.setPasswordHash(passwordHash);
             usuarioRepository.save(usuario);
         }
     }
@@ -64,8 +61,10 @@ public class Service {
     public Usuario login(String correo, String password) {
         Usuario usuario = usuarioRepository.findByCorreo(correo);
         if (usuario != null && BCrypt.checkpw(password, usuario.getPasswordHash())) {
+            System.out.println("Login exitoso para usuario: " + correo);
             return usuario;
         }
+        System.out.println("Login fallido para usuario: " + correo);
         return null;
     }
     // --- INDEX ---
@@ -97,6 +96,116 @@ public class Service {
     }
 
     // --- Oferente ---
+    private double calcularCompatibilidad(Oferente oferente, Puesto puesto) {
+        // Obtener características requeridas del puesto
+        Set<PuestoCaracteristica> caracteristicasPuesto = puestoCaracteristicaRepository
+                .findByIdPuestoId(puesto.getId());
+
+        if (caracteristicasPuesto.isEmpty()) {
+            return 0.0;
+        }
+
+        // Obtener habilidades del oferente
+        List<OferenteHabilidad> habilidadesOferente = oferenteHabilidadRepository
+                .findByIdOferenteId(oferente.getId());
+
+        // Crear mapa de habilidades del oferente para búsqueda rápida
+        Map<Integer, Integer> mapaHabilidadesOferente = new HashMap<>();
+        for (OferenteHabilidad oh : habilidadesOferente) {
+            mapaHabilidadesOferente.put(oh.getIdCaracteristica().getId(), oh.getNivel());
+        }
+
+        // Construcción de vectores para distancia coseno
+        double productoPunto = 0.0;
+        double magnitudPuesto = 0.0;
+        double magnitudOferente = 0.0;
+
+        // Iterar sobre características del puesto
+        for (PuestoCaracteristica pc : caracteristicasPuesto) {
+            Integer idCaracteristica = pc.getIdCaracteristica().getId();
+            Integer nivelRequerido = pc.getNivelRequerido();
+
+            Integer nivelOferente = mapaHabilidadesOferente.getOrDefault(idCaracteristica, 0);
+
+            productoPunto += nivelRequerido * nivelOferente;
+
+            magnitudPuesto += nivelRequerido * nivelRequerido;
+            magnitudOferente += nivelOferente * nivelOferente;
+        }
+
+        // Distancia coseno = (A·B) / (||A|| × ||B||)
+        if (magnitudPuesto == 0.0 || magnitudOferente == 0.0) {
+            return 0.0;
+        }
+        return productoPunto / (Math.sqrt(magnitudPuesto) * Math.sqrt(magnitudOferente));
+    }
+
+    public List<CandidatoResultado> listarOferentesCandidatos(Integer idPuesto) {
+        Puesto puesto = puestoRepository.findById(idPuesto).orElse(null);
+        if (puesto == null) {
+            return new ArrayList<>();
+        }
+
+        Set<PuestoCaracteristica> caracteristicasPuesto = puestoCaracteristicaRepository
+                .findByIdPuestoId(idPuesto);
+        if (caracteristicasPuesto.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+
+        List<Oferente> todosOferentes = oferenteRepository.findByIdUsuarioAprobadoTrue();
+        List<CandidatoResultado> candidatos = new ArrayList<>();
+
+        //
+        for (Oferente oferente : todosOferentes) {
+            // Obtener habilidades del oferente
+            List<OferenteHabilidad> habilidadesOferente = oferenteHabilidadRepository
+                    .findByIdOferenteId(oferente.getId());
+            System.out.println("Evaluando oferente: " + oferente.getNombre() + " " + oferente.getApellido() +
+                               " con habilidades: " + habilidadesOferente.size());
+            if (habilidadesOferente.isEmpty()) {
+                continue; // Saltar oferentes sin habilidades
+            }
+
+            // Crear mapa de habilidades del oferente
+            Map<Integer, Integer> mapaHabilidades = new HashMap<>();
+            for (OferenteHabilidad oh : habilidadesOferente) {
+                mapaHabilidades.put(oh.getIdCaracteristica().getId(), oh.getNivel());
+            }
+
+            // Contar requisitos alcanzados (nivel_oferente >= nivel_requerido)
+            int requisitosAlcanzados = 0;
+            for (PuestoCaracteristica pc : caracteristicasPuesto) {
+                Integer idCaracteristica = pc.getIdCaracteristica().getId();
+                Integer nivelRequerido = pc.getNivelRequerido();
+                Integer nivelOferente = mapaHabilidades.getOrDefault(idCaracteristica, 0);
+
+                if (nivelOferente >= nivelRequerido) {
+                    requisitosAlcanzados++;
+                }
+            }
+
+            // Filtrar solo incluir si cumple al menos con una característica
+            if (requisitosAlcanzados > 0) {
+                double compatibilidad = calcularCompatibilidad(oferente, puesto);
+                double porcentaje = compatibilidad * 100.0; // Convertir a porcentaje
+
+                CandidatoResultado resultado = new CandidatoResultado();
+                resultado.setOferente(oferente);
+                resultado.setPorcentajeCompatibilidad(porcentaje);
+                resultado.setRequisitosAlcanzados(requisitosAlcanzados);
+
+                candidatos.add(resultado);
+            }
+        }
+
+        // Ordenar por porcentaje de compatibilidad descendente
+        candidatos.sort((a, b) -> Double.compare(b.getPorcentajeCompatibilidad(),
+                                                  a.getPorcentajeCompatibilidad()));
+
+        return candidatos;
+    }
+
     public List<Oferente> listarOferentesPendientes() {
         return oferenteRepository.findByIdUsuarioAprobadoFalse();
     }
@@ -275,4 +384,7 @@ public class Service {
     }
 
 
+    public Puesto findPuesto(Integer idPuesto) {
+        return puestoRepository.findById(idPuesto).orElse(null);
+    }
 }
