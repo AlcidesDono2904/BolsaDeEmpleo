@@ -1,0 +1,38 @@
+<div th:fragment="listarCaracteristicas" >
+    <div class="card p-3" style="background-color:#e8f5e9">
+        <b>Ruta:</b>
+        <div class="mt-2">
+            <span class="badge bg-secondary">Raíces</span>
+            <div th:if="caracteristicaArbol != null" class="mt-2">
+                            <span th:each="c, iterStat : ${caracteristicaArbol}" class="me-2">
+                                <a class="btn btn-outline-primary btn-sm"
+                                   th:href="@{/admin/caracteristicas(idPadre=${c.id})}"
+                                   th:text="${c.nombre}"
+                                >
+                                    <span th:if="${!iterStat.last}" class="mx-1">/</span>
+                                </a>
+                            </span>
+            </div>
+        </div>
+
+        <p th:if="${caracteristicaSeleccionada == null}" class="mt-2 text-muted">Categorías: raíces</p>
+        <div th:if="${caracteristicaSeleccionada}">
+            <p th:text="|Subcategorias de:  ${caracteristicaSeleccionada.nombre}|"> </p>
+        </div>
+
+        <table class="table table-sm">
+            <tr th:each="caracteristica : ${caracteristicas}">
+                <td th:text="${caracteristica.nombre}"></td>
+                <td class="text-end">
+                    <a class="btn btn-outline-primary btn-sm"
+                       th:href="@{/admin/caracteristicas(idPadre=${caracteristica.id})}"
+                    >
+                        Entrar
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>

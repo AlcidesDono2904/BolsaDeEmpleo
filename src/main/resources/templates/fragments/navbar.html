@@ -9,11 +9,31 @@
       <img src="/img/empleo.png" width="30" class="me-2">
       BolsaEmpleo
     </a>
-
-    <div class="navbar-nav">
+    <!-- No user -->
+    <div th:if="${session.usuario == null}" class="navbar-nav">
       <a class="nav-link" href="/puestos/buscar">Buscar puestos</a>
       <a class="nav-link" href="/empresa/registro-empresa">Registro Empresa</a>
       <a class="nav-link" href="/oferente/registro-oferente">Registro Oferente</a>
+    </div>
+    <!-- Oferente -->
+    <div th:if="${session.usuario !=null and session.usuario.rol == 'OFERENTE'}" class="navbar-nav">
+      <a class="nav-link" href="/oferente/oferente-dashboard">Dashboard</a>
+      <a class="nav-link" href="/oferente/habilidades">Mis habilidades</a>
+      <a class="nav-link" href="/oferente/cv">Mi CV</a>
+    </div>
+    <!-- Empresa -->
+    <div th:if="${session.usuario !=null and session.usuario.rol == 'EMPRESA'}" class="navbar-nav">
+      <a class="nav-link" href="/empresa/empresa-dashboard">Dashboard</a>
+      <a class="nav-link" href="/empresa/puestos">Mis puestos</a>
+      <a class="nav-link" href="/empresa/publicar/puesto">Publicar puesto</a>
+    </div>
+    <!-- Admin -->
+    <div th:if="${session.usuario !=null and session.usuario.rol == 'ADMIN'}" class="navbar-nav">
+      <a class="nav-link" href="/admin/admin-dashboard">Dashboard</a>
+      <a class="nav-link" href="/admin/empresas-pendientes">Empresas pendientes</a>
+      <a class="nav-link" href="/admin/oferentes-pendientes">Oferentes pendientes</a>
+      <a class="nav-link" href="/admin/caracteristicas">Caracteristicas</a>
+      <a class="nav-link" href="/admin/reportes-puestos">Reportes</a>
     </div>
 
     <div class="ms-auto">

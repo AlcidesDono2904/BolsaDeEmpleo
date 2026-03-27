@@ -61,14 +61,40 @@ public class OferenteController {
 
     //mostrar habilidades
     @GetMapping("/habilidades")
-    public String habilidades(Model model) {
+    public String habilidades(Model model, @RequestParam(required = false) Integer actualId) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
 
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
         Oferente of = oferenteRepository.findByIdUsuarioId(usuario.getId());
 
+        // Obtener habilidades actuales del oferente
         model.addAttribute("habilidades", service.getHabilidadesDeOferente(of.getId()));
-        model.addAttribute("caracteristicas", service.listarCaracteristicas(new Caracteristica()));
+
+        // Si se proporciona actualId, buscar esa característica
+        if (actualId != null) {
+            Caracteristica caracteristicaSeleccionada = service.findCaracteristicaById(actualId);
+
+            if (caracteristicaSeleccionada != null) {
+                // Obtener el árbol de padres (ruta desde raíz hasta esta característica)
+                model.addAttribute("caracteristicaArbol", caracteristicaSeleccionada.listarPadres());
+
+                // Obtener las subcategorías de la característica seleccionada
+                model.addAttribute("caracteristicas",
+                    service.listarCaracteristicas(caracteristicaSeleccionada));
+
+                // Mostrar la característica seleccionada
+                model.addAttribute("caracteristicaSeleccionada", caracteristicaSeleccionada);
+            }
+        } else {
+            // Si no hay actualId, mostrar solo las raíces
+            Caracteristica raiz = new Caracteristica();
+            model.addAttribute("caracteristicas", service.listarCaracteristicas(raiz));
+            model.addAttribute("caracteristicaSeleccionada", null);
+        }
 
         return "oferente/habilidades";
     }
