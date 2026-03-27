@@ -39,7 +39,7 @@
                     <td th:text="${candidato.getRequisitosAlcanzados()}">1 / 1</td>
                     <td th:text="${candidato.getPorcentajeCompatibilidad()}">100.00%</td>
                     <td>
-                        <a th:href="@{/empresa/candidatos/detalle${candidato.getOferente().getId()}}" class="btn btn-outline-primary btn-sm">
+                        <a th:href="@{/empresa/candidatos/detalle(idPuesto=${candidato.getOferente().id})}" class="btn btn-outline-primary btn-sm">
                             Ver detalle
                         </a>
                     </td>
