@@ -58,10 +58,9 @@ public class Oferente {
     private Set<Cv> cvs = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "idOferente")
-    private Set<OferenteHabilidad> oferenteHabilidads = new LinkedHashSet<>();
+    private Set<OferenteHabilidad> habilidads = new LinkedHashSet<>();
 
-    public Oferente() {
-    }
+    public Oferente() {}
 
     public Integer getId() {
         return id;
@@ -144,12 +143,11 @@ public class Oferente {
     }
 
     public Set<OferenteHabilidad> getOferenteHabilidads() {
-        return oferenteHabilidads;
+        return habilidads;
     }
 
     public void setOferenteHabilidads(Set<OferenteHabilidad> oferenteHabilidads) {
-        this.oferenteHabilidads = oferenteHabilidads;
+        this.habilidads = oferenteHabilidads;
     }
-
 
 }
