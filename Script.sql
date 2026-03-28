@@ -29,9 +29,8 @@ CREATE TABLE oferente (
     apellido VARCHAR(100) NOT NULL,
     telefono VARCHAR(20),
     residencia VARCHAR(150),
-    id_nacionalidad INT,
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (id_nacionalidad) REFERENCES nacionalidad(id_nacionalidad)
+    id_nacionalidad VARCHAR(100),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );
 CREATE TABLE administrador (
     id_admin INT AUTO_INCREMENT PRIMARY KEY,

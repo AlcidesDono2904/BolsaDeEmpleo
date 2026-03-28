@@ -29,10 +29,11 @@
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Nacionalidad</label>
-                    <select class="form-select">
-                        <option>Costarricense</option>
-                        <option>Nicaragüense</option>
-                        <option>Panameño</option>
+                    <select class="form-select" name="nacionalidad">
+                        <option th:each="nacionalidad : ${nacionalidades}"
+                                th:value="${nacionalidad}"
+                                th:text="${nacionalidad}"
+                        >Nacionalidad</option>
                     </select>
                 </div>
 
@@ -71,11 +72,6 @@
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Correo</label>
                     <input type="email" class="form-control" name="correo">
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">Clave</label>
-                    <input type="password" class="form-control" name="password">
                 </div>
 
             </div>

@@ -47,9 +47,10 @@ public class Oferente {
     @Column(name = "residencia", length = 150)
     private String residencia;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_nacionalidad")
-    private Nacionalidad idNacionalidad;
+    @Size(max = 100)
+    @NotNull
+    @JoinColumn(name = "nacionalidad")
+    private String nacionalidad;
 
     @OneToMany(mappedBy = "idOferente")
     private Set<Candidatura> candidaturas = new LinkedHashSet<>();
@@ -118,13 +119,6 @@ public class Oferente {
         this.residencia = residencia;
     }
 
-    public Nacionalidad getIdNacionalidad() {
-        return idNacionalidad;
-    }
-
-    public void setIdNacionalidad(Nacionalidad idNacionalidad) {
-        this.idNacionalidad = idNacionalidad;
-    }
 
     public Set<Candidatura> getCandidaturas() {
         return candidaturas;

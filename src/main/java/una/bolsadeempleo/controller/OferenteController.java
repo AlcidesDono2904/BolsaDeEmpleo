@@ -8,11 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import una.bolsadeempleo.logic.Caracteristica;
-import una.bolsadeempleo.logic.Oferente;
-import una.bolsadeempleo.logic.OferenteHabilidad;
-import una.bolsadeempleo.logic.Service;
-import una.bolsadeempleo.logic.Usuario;
+import una.bolsadeempleo.logic.*;
 import una.bolsadeempleo.repository.OferenteRepository;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
@@ -22,12 +18,12 @@ import com.lowagie.text.pdf.PdfWriter;
 public class OferenteController {
     @Autowired
     private Service service;
-
     @Autowired
     private HttpSession session;
-
     @Autowired
     private OferenteRepository oferenteRepository;
+    @Autowired
+    private NacionalidadService nacionalidadService;
 
     @GetMapping("/oferente-dashboard")
     public String dashboard() {
@@ -40,22 +36,22 @@ public class OferenteController {
         return "/oferente/oferente-dashboard";
     }
 
-    @GetMapping("/registro")
-    public String mostrarFormulario() {
+    @GetMapping("/registro-oferente")
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("nacionalidades", nacionalidadService.listarNacionalidades());
         return "/registro-oferente";
     }
 
     @PostMapping("/guardar")
     public String guardarOferente(@RequestParam String correo,
-                                  @RequestParam String password,
                                   @RequestParam String identificacion,
                                   @RequestParam String nombre,
                                   @RequestParam String apellido,
                                   @RequestParam String telefono,
-                                  @RequestParam String residencia) {
+                                  @RequestParam String residencia,
+                                  @RequestParam String nacionalidad) {
 
-        service.guardarOferente(correo, password, identificacion, nombre, apellido, telefono, residencia);
-
+        service.guardarOferente(correo, null, identificacion, nombre, apellido, telefono, residencia, nacionalidad);
         return "redirect:/login";
     }
 

@@ -73,16 +73,6 @@ public class HomeController {
         return "registro-empresa";
     }
 
-    @GetMapping("oferente/registro-oferente")
-    public String oferente() {
-        return "registro-oferente";
-    }
-
-    @PostMapping("oferente/registro-oferente")
-    public String registroOferente(HttpServletRequest req, @ModelAttribute Oferente oferente, @ModelAttribute Usuario usuario) {
-        return "redirect:/";
-    }
-
     @GetMapping("/login")
     public String login() {
         return "login";
