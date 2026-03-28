@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import una.bolsadeempleo.logic.*;
+import una.bolsadeempleo.logic.services.NacionalidadService;
 import una.bolsadeempleo.repository.OferenteRepository;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;

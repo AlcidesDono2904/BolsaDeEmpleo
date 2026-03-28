@@ -14,6 +14,7 @@ import una.bolsadeempleo.logic.Oferente;
 import una.bolsadeempleo.logic.Puesto;
 import una.bolsadeempleo.logic.Service;
 import una.bolsadeempleo.logic.Usuario;
+import una.bolsadeempleo.logic.services.CambioService;
 import una.bolsadeempleo.repository.PuestoRepository;
 
 import java.util.ArrayList;
@@ -34,14 +35,17 @@ public class HomeController {
 
     @Autowired
     private HttpSession session;
+    @Autowired
+    private CambioService cambioService;
 
     //INDEX PUESTOS
     @GetMapping("/")
     public String index(Model model) {
 
-        var puestos = service.obtenerUltimosPuestos();
-
+        List<Puesto> puestos = service.obtenerUltimosPuestos();
+        List<Double> salarios = cambioService.calcularVenta(puestos);
         model.addAttribute("puestos", puestos);
+        model.addAttribute("salariosColones", salarios);
 
         return "index";
     }
@@ -60,10 +64,12 @@ public class HomeController {
     public String buscar(@RequestParam(required = false) List<Integer> caracteristicas,
                          Model model) {
 
-        var resultados = service.buscarPuestosPorCaracteristicas(caracteristicas);
+        List<Puesto> puestos = service.buscarPuestosPorCaracteristicas(caracteristicas);
+        List<Double> salarios = cambioService.calcularVenta(puestos);
 
-        model.addAttribute("puestos", resultados);
+        model.addAttribute("puestos", puestos);
         model.addAttribute("caracteristicas", service.getTodasCaracteristicas());
+        model.addAttribute("salariosColones", salarios);
 
         return "buscar-puestos";
     }
