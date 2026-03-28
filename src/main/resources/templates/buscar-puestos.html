@@ -41,14 +41,16 @@
 
         <div class="row mt-3">
 
-            <div class="col-md-3 mb-3" th:each="p : ${puestos}">
+            <div class="col-md-3 mb-3" th:each="p, stat : ${puestos}">
                 <div class="card p-3">
 
                     <strong th:text="${p.idEmpresa.nombre}">Empresa</strong><br>
 
                     <span th:text="${p.descripcion}">Descripcion</span><br>
 
-                    <b>Salario: <span th:text="${p.salarioUsd}"></span></b>
+                    <b>Salario: $<span th:text="${p.salarioUsd}"></span> <br>
+                        ₡<span th:text="${salariosColones[stat.index]}"></span>
+                    </b>
 
                 </div>
             </div>

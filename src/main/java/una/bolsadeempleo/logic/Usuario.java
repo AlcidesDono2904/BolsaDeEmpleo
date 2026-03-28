@@ -27,7 +27,7 @@ public class Usuario {
     private String correo;
 
     @Size(max = 255)
-    @Column(name = "password_hash", nullable = false)
+    @Column(name = "password_hash")
     private String passwordHash;
 
     @Size(max = 20)
@@ -82,11 +82,11 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public @Size(max = 255) @NotNull String getPasswordHash() {
+    public @Size(max = 255) String getPasswordHash() {
         return passwordHash;
     }
 
-    public void setPasswordHash(@Size(max = 255) @NotNull String passwordHash) {
+    public void setPasswordHash(@Size(max = 255) String passwordHash) {
         this.passwordHash = passwordHash;
     }
 

@@ -213,7 +213,7 @@ public class Service {
     public void guardarOferente(String correo, String password,
                                 String identificacion, String nombre,
                                 String apellido, String telefono,
-                                String residencia) {
+                                String residencia, String nacionalidad) {
 
         // crear usuario
         Usuario usuario = new Usuario();
@@ -231,6 +231,7 @@ public class Service {
         oferente.setApellido(apellido);
         oferente.setTelefono(telefono);
         oferente.setResidencia(residencia);
+        oferente.setNacionalidad(nacionalidad);
 
         // relación
         oferente.setIdUsuario(usuario);

@@ -19,7 +19,7 @@
 
     <div class="row">
 
-        <div class="col-md-4" th:each="p : ${puestos}">
+        <div class="col-md-4" th:each="p, stat : ${puestos}">
 
             <div class="card bg-light border-success mb-3">
                 <div class="card-body">
@@ -28,9 +28,16 @@
 
                     <p th:text="${p.descripcion}">Descripcion</p>
 
-                    <strong>$ <span th:text="${p.salarioUsd}"></span></strong>
+                    <div class="container m-0">
+                        <div class="row">
+                            <strong>$ <span th:text="${p.salarioUsd}"></span></strong>
+                        </div>
+                        <div class="row">
+                            <strong>₡ <span th:text="${salariosColones[stat.index]}"></span></strong>
+                        </div>
+                    </div>
 
-                    <br><br>
+                    <br>
 
                     <!-- BOTÓN MODIFICADO -->
                     <button class="btn btn-outline-primary w-100"
