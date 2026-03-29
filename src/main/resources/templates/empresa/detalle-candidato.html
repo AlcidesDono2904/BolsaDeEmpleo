@@ -17,16 +17,16 @@
 
     <div class="container mt-4">
 
-        <h3>Detalle de oferente</h3>
+        <h3>Detalle de oferente asdsa</h3>
 
         <div class="card p-3 mb-4">
 
-            <strong>Jose Sanchez</strong><br>
+            <strong th:text="${oferente.nombre + ' ' + oferente.apellido}"></strong><br>
 
-            <b>Identificación:</b> 123456 <br>
-            <b>Email:</b> jsanchez@sanchez.com <br>
-            <b>Teléfono:</b> 4535667 <br>
-            <b>Residencia:</b> San Jose
+            <b>Identificación:</b> <span th:text="${oferente.identificacion}"></span><br>
+            <b>Email:</b> <span th:text="${oferente.idUsuario.correo}"></span><br>
+            <b>Teléfono:</b> <span th:text="${oferente.telefono}"></span><br>
+            <b>Residencia:</b> <span th:text="${oferente.residencia}"></span><br>
 
         </div>
 
@@ -35,9 +35,9 @@
         <table class="table">
 
             <thead>
-            <tr>
-                <th>Característica</th>
-                <th>Nivel</th>
+            <tr th:each="h : ${habilidades}">
+                <td th:text="${h.idCaracteristica.nombre}"></td>
+                <td th:text="${h.nivel}"></td>
             </tr>
             </thead>
 

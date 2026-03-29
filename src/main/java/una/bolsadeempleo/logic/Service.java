@@ -239,6 +239,51 @@ public class Service {
         oferenteRepository.save(oferente);
     }
 
+    //logica de buscar candidatos
+    /*public List<CandidatoResultado> buscarCandidatosParaPuesto(Integer idPuesto) {
+
+        Puesto puesto = puestoRepository.findById(idPuesto).orElse(null);
+        if (puesto == null) return List.of();
+
+        // características requeridas del puesto
+        var requeridas = puesto.getPuestoCaracteristicas();
+
+        var oferentes = oferenteRepository.findAll();
+        List<CandidatoResultado> resultados = new ArrayList<>();
+
+        for (Oferente o : oferentes) {
+
+            int total = requeridas.size();
+            int cumple = 0;
+
+            for (PuestoCaracteristica req : requeridas) {
+
+                for (OferenteHabilidad hab : o.getOferenteHabilidads()) {
+
+                    if (hab.getIdCaracteristica().getId().equals(req.getIdCaracteristica().getId()) &&
+                            hab.getNivel() >= req.getNivelRequerido()) {
+
+                        cumple++;
+                    }
+                }
+            }
+
+            double porcentaje = total == 0 ? 0 : (cumple * 100.0) / total;
+
+            resultados.add(new CandidatoResultado(o, cumple, total, porcentaje));
+        }
+
+        return resultados;
+    }
+*/
+    public Puesto obtenerPuesto(Integer id) {
+        return puestoRepository.findById(id).orElse(null);
+    }
+
+    public Oferente obtenerOferente(Integer id) {
+        return oferenteRepository.findById(id).orElse(null);
+    }
+
     public List<OferenteHabilidad> getHabilidadesDeOferente(Integer idOferente) {
         return oferenteHabilidadRepository.findByIdOferenteId(idOferente);
     }

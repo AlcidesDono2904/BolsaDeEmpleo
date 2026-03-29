@@ -58,6 +58,36 @@ public class EmpresaController {
         return "redirect:/login";
     }
 
+    //buscar candidato
+
+    /*@GetMapping("/candidatos/{idPuesto}")
+    public String buscarCandidatos(@PathVariable Integer idPuesto, Model model) {
+
+        var candidatos = service.buscarCandidatosParaPuesto(idPuesto);
+        var puesto = service.obtenerPuesto(idPuesto);
+
+        model.addAttribute("puesto", puesto);
+        model.addAttribute("candidatos", candidatos);
+
+        return "empresa/candidatos";
+    }*/
+
+    @GetMapping("/candidatos/detalle/{idOferente}")
+    public String verDetalle(@PathVariable Integer idOferente,
+                             Model model) {
+        String redireccion = validarEmpresa();
+        if (redireccion != null) {
+            return redireccion;
+        }
+
+        var oferente = service.obtenerOferente(idOferente);
+
+        model.addAttribute("oferente", oferente);
+        model.addAttribute("habilidades", oferente.getOferenteHabilidads());
+
+        return "empresa/detalle-candidato";
+    }
+
     @GetMapping("/empresa-dashboard")
     public String dashboard(@RequestParam(required = false) String ok) {
             String redireccion = validarEmpresa();
@@ -69,6 +99,10 @@ public class EmpresaController {
 
     @GetMapping("/candidatos/buscar")
     public String buscarCandidatos(Model model, @RequestParam Integer idPuesto) {
+        String redireccion = validarEmpresa();
+        if (redireccion != null) {
+            return redireccion;
+        }
         model.addAttribute("puesto", service.findPuesto(idPuesto));
         List<CandidatoResultado> candidatos = service.listarOferentesCandidatos(idPuesto);
         System.out.println("Candidatos encontrados para el puesto ID " + idPuesto + ":");
