@@ -114,6 +114,8 @@ public class AdminController {
             for (Caracteristica c : lista) {
                 System.out.println("ID: " + c.getId() + " Nombre: " + c.getNombre());
             }
+        }else {
+            model.addAttribute("caracteristicaArbol", null);
         }
 
         model.addAttribute("caracteristicas", service.listarCaracteristicas(caracteristica));

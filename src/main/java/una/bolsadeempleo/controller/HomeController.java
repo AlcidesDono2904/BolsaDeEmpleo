@@ -66,7 +66,6 @@ public class HomeController {
 
         List<Puesto> puestos = service.buscarPuestosPorCaracteristicas(caracteristicas);
         List<Double> salarios = cambioService.calcularVenta(puestos);
-
         model.addAttribute("puestos", puestos);
         model.addAttribute("caracteristicas", service.getTodasCaracteristicas());
         model.addAttribute("salariosColones", salarios);

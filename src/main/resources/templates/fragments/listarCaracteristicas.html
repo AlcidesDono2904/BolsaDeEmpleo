@@ -2,17 +2,29 @@
     <div class="card p-3" style="background-color:#e8f5e9">
         <b>Ruta:</b>
         <div class="mt-2">
-            <span class="badge bg-secondary">Raíces</span>
+
             <div th:if="caracteristicaArbol != null" class="mt-2">
-                            <span th:each="c, iterStat : ${caracteristicaArbol}" class="me-2">
-                                <a class="btn btn-outline-primary btn-sm"
-                                   th:href="@{/admin/caracteristicas(idPadre=${c.id})}"
-                                   th:text="${c.nombre}"
-                                >
-                                    <span th:if="${!iterStat.last}" class="mx-1">/</span>
-                                </a>
-                            </span>
+                <span class="me-2">
+                    <a class="btn btn-outline-secondary btn-sm" th:href="@{/admin/caracteristicas}">Raíces</a>
+                    <span class="mx-1">/</span>
+                </span>
+
+                <span th:each="c, iterStat : ${caracteristicaArbol}" class="me-2">
+                    <a class="btn btn-outline-primary btn-sm"
+                       th:href="@{/admin/caracteristicas(idPadre=${c.id})}"
+                       th:text="${c.nombre}"
+                    >
+                        <span th:if="${!iterStat.last}" class="mx-1">/</span>
+                    </a>
+                </span>
             </div>
+
+            <div th:if="caracteisticaArbol == null" class="mt-2">
+                <span class="me-2">
+                    <a class="btn btn-outline-secondary btn-sm">Raíces aa</a>
+                </span>
+            </div>
+
         </div>
 
         <p th:if="${caracteristicaSeleccionada == null}" class="mt-2 text-muted">Categorías: raíces</p>
