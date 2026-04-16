@@ -290,30 +290,26 @@ public class Service {
 
     public void agregarHabilidad(Integer usuarioId, Integer idCaracteristica, Integer nivel) {
 
-        // 1. Buscar el oferente real basado en el usuario que está logueado
+
         Oferente oferente = oferenteRepository.findByIdUsuarioId(usuarioId);
 
         if (oferente == null) {
             throw new RuntimeException("No existe oferente asociado al usuario " + usuarioId);
         }
 
-        // 2. Buscar la característica seleccionada
         Caracteristica c = caracteristicaRepository.findById(idCaracteristica)
                 .orElseThrow(() -> new RuntimeException("Característica no encontrada"));
 
-        // 3. Crear el ID compuesto
         OferenteHabilidadId ohId = new OferenteHabilidadId();
-        ohId.setIdOferente(oferente.getId());         // este SÍ es el correcto
+        ohId.setIdOferente(oferente.getId());
         ohId.setIdCaracteristica(c.getId());
 
-        // 4. Crear la habilidad
         OferenteHabilidad oh = new OferenteHabilidad();
         oh.setId(ohId);
         oh.setIdOferente(oferente);
         oh.setIdCaracteristica(c);
         oh.setNivel(nivel);
 
-        // 5. Guardar
         oferenteHabilidadRepository.save(oh);
     }
 
