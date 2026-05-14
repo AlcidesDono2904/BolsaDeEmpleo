@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
 function Login() {
 
+    const navigate = useNavigate();
     const [correo, setCorreo] = useState("");
     const [clave, setClave] = useState("");
 
@@ -19,11 +21,23 @@ function Login() {
                 }
             );
 
-            console.log(response.data);
+            if (response.data) {
 
-            alert("Login correcto");
+                localStorage.setItem(
+                    "usuario",
+                    JSON.stringify(response.data)
+                );
+
+                navigate("/dashboard");
+
+            } else {
+
+                alert("Credenciales incorrectas");
+            }
 
         } catch (error) {
+
+            console.log(error);
 
             alert("Credenciales incorrectas");
         }
