@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import una.bolsadeempleo.logic.Usuario;
 import una.bolsadeempleo.logic.Service;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -13,11 +14,17 @@ public class AuthController {
     private Service service;
 
     @PostMapping("/login")
-    public Usuario login(@RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> login(@RequestBody Usuario usuario) {
 
-        return service.login(
+        Usuario u = service.login(
                 usuario.getCorreo(),
                 usuario.getPasswordHash()
         );
+
+        if (u == null) {
+            return ResponseEntity.status(401).body(null);
+        }
+
+        return ResponseEntity.ok(u);
     }
 }
