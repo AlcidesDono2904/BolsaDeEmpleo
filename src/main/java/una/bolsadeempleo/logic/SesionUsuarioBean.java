@@ -30,6 +30,10 @@ public class SesionUsuarioBean {
         return verified != null && verified;
     }
 
+    public Boolean hasAdminPermissions() {
+        return "ADMIN".equals(rol) && isVerified();
+    }
+
     public String getEmail() {
         return email;
     }

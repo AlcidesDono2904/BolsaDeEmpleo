@@ -25,6 +25,8 @@ public class Service {
     @Autowired
     private OferenteHabilidadRepository oferenteHabilidadRepository;
 
+    @Autowired
+    private SesionUsuarioBean sesion;
 
     // --- Usuario ---
     public Usuario saveUsuario(Usuario usuario) {
@@ -62,6 +64,11 @@ public class Service {
         Usuario usuario = usuarioRepository.findByCorreo(correo);
         if (usuario != null && BCrypt.checkpw(password, usuario.getPasswordHash())) {
             System.out.println("Login exitoso para usuario: " + correo);
+            if (usuario.getAprobado()) {
+                sesion.login(correo, usuario.getRol());
+            } else {
+                System.out.println("Usuario no aprobado: " + correo);
+            }
             return usuario;
         }
         System.out.println("Login fallido para usuario: " + correo);

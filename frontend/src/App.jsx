@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 
 import Login from './pages/Login'
 import Dashboard from "./pages/Dashboard.jsx";
+import Home from "./pages/Home.jsx";
 
 
 function App() {

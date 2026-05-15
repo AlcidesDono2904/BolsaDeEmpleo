@@ -5,10 +5,14 @@ import org.springframework.web.bind.annotation.*;
 import una.bolsadeempleo.logic.Usuario;
 import una.bolsadeempleo.logic.Service;
 import org.springframework.http.ResponseEntity;
+import una.bolsadeempleo.logic.SesionUsuarioBean;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+
+    @Autowired
+    private SesionUsuarioBean sesion;
 
     @Autowired
     private Service service;
@@ -23,8 +27,17 @@ public class AuthController {
 
         if (u == null) {
             return ResponseEntity.status(401).body(null);
+        }else if (!u.getAprobado()) {
+            return ResponseEntity.status(403).body(null);
         }
-
+        System.out.println(u);
         return ResponseEntity.ok(u);
+    }
+
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout() {
+        sesion.logout();
+        return ResponseEntity.ok().build();
     }
 }

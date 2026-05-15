@@ -1,5 +1,6 @@
 package una.bolsadeempleo.logic;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -42,13 +43,13 @@ public class Usuario {
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "fecha_registro")
     private Instant fechaRegistro;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "idUsuario")
     private Set<Administrador> administradors = new LinkedHashSet<>();
-
+    @JsonIgnore
     @OneToMany(mappedBy = "idUsuario")
     private Set<Empresa> empresas = new LinkedHashSet<>();
-
+    @JsonIgnore
     @OneToMany(mappedBy = "idUsuario")
     private Set<Oferente> oferentes = new LinkedHashSet<>();
 
