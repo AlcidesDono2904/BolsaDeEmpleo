@@ -15,8 +15,30 @@ function Login() {
                 correo: correo, passwordHash: clave
             });
             if (response.data) {
+
                 localStorage.setItem("usuario", JSON.stringify(response.data));
                 navigate("/dashboard");
+
+
+                localStorage.setItem(
+                    "usuario",
+                    JSON.stringify(response.data)
+                );
+
+                if (response.data.rol === "ADMIN") {
+
+                    navigate("/admin");
+
+                } else if (response.data.rol === "EMPRESA") {
+
+                    navigate("/empresa");
+
+                } else if (response.data.rol === "OFERENTE") {
+
+                    navigate("/oferente");
+                }
+
+
             } else {
                 alert("Credenciales incorrectas");
             }
