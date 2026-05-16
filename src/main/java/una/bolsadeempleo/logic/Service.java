@@ -2,6 +2,8 @@ package una.bolsadeempleo.logic;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import una.bolsadeempleo.logic.DTO.PuestoDTO;
+import una.bolsadeempleo.logic.services.CambioService;
 import una.bolsadeempleo.repository.*;
 
 import java.math.BigDecimal;
@@ -24,6 +26,9 @@ public class Service {
     private PuestoCaracteristicaRepository puestoCaracteristicaRepository;
     @Autowired
     private OferenteHabilidadRepository oferenteHabilidadRepository;
+
+    @Autowired
+    private CambioService cambioService;
 
     @Autowired
     private SesionUsuarioBean sesion;
@@ -448,5 +453,29 @@ public class Service {
 
     public Puesto findPuesto(Integer idPuesto) {
         return puestoRepository.findById(idPuesto).orElse(null);
+    }
+
+    // DTO's
+    public List<PuestoDTO> obtenerUltimosPuestosDTO() {
+        List<Puesto> puestos = this.obtenerUltimosPuestos();
+        List<Double> salarios = cambioService.calcularVenta(puestos);
+
+        List<PuestoDTO> response = new ArrayList<>();
+
+        for (int i = 0; i < puestos.size(); i++) {
+
+            Puesto puesto = puestos.get(i);
+
+            PuestoDTO dto = new PuestoDTO();
+
+            dto.setId(puesto.getId());
+            dto.setNombreEmpresa(puesto.getIdEmpresa().getNombre());
+            dto.setDescripcion(puesto.getDescripcion());
+            dto.setSalarioUsd(puesto.getSalarioUsd().doubleValue());
+            dto.setSalarioColones(salarios.get(i));
+
+            response.add(dto);
+        }
+        return response;
     }
 }

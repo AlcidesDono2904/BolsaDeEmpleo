@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import una.bolsadeempleo.logic.Puesto;
-import una.bolsadeempleo.logic.TipoCambioDTO;
+import una.bolsadeempleo.logic.DTO.TipoCambioDTO;
 
 import java.util.ArrayList;
 import java.util.List;
