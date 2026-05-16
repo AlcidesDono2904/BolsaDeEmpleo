@@ -28,7 +28,18 @@ function Login() {
                     JSON.stringify(response.data)
                 );
 
-                navigate("/dashboard");
+                if (response.data.rol === "ADMIN") {
+
+                    navigate("/admin");
+
+                } else if (response.data.rol === "EMPRESA") {
+
+                    navigate("/empresa");
+
+                } else if (response.data.rol === "OFERENTE") {
+
+                    navigate("/oferente");
+                }
 
             } else {
 
