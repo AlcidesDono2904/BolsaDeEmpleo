@@ -2,42 +2,31 @@ package una.bolsadeempleo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import una.bolsadeempleo.logic.Usuario;
-import una.bolsadeempleo.logic.Service;
+import una.bolsadeempleo.logic.DTO.LoginRequestDTO;
+import una.bolsadeempleo.logic.DTO.LoginResponseDTO;
 import org.springframework.http.ResponseEntity;
-import una.bolsadeempleo.logic.SesionUsuarioBean;
+import una.bolsadeempleo.logic.services.AuthService;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
-
     @Autowired
-    private SesionUsuarioBean sesion;
-
-    @Autowired
-    private Service service;
+    private AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<Usuario> login(@RequestBody Usuario usuario) {
+    public ResponseEntity<LoginResponseDTO> login(
+            @RequestBody LoginRequestDTO request
+    ) {
 
-        Usuario u = service.login(
-                usuario.getCorreo(),
-                usuario.getPasswordHash()
+        return ResponseEntity.ok(
+                authService.login(request)
         );
-
-        if (u == null) {
-            return ResponseEntity.status(401).body(null);
-        }else if (!u.getAprobado()) {
-            return ResponseEntity.status(403).body(null);
-        }
-        System.out.println(u);
-        return ResponseEntity.ok(u);
     }
-
-
+/*
     @PostMapping("/logout")
     public ResponseEntity<Void> logout() {
         sesion.logout();
         return ResponseEntity.ok().build();
-    }
+    }*/
 }
