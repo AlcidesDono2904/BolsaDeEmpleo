@@ -1,4 +1,5 @@
 function JobCard({ puesto }) {
+    //TODO: agregar logica de "cargando"
   return (
       <div key={puesto.id} className="col-md-4">
           <div className="card bg-light border-success mb-3">
@@ -17,14 +18,14 @@ function JobCard({ puesto }) {
 
                   <button className="btn btn-outline-primary w-100"
                           data-bs-toggle="modal"
-                          th:attr="data-bs-target='#detallePuesto_' + ${p.id}">
+                          data-bs-target = {'#detallePuesto_'+puesto.id}>
                       Ver detalle
                   </button>
               </div>
           </div>
 
           <div className="modal fade"
-               th:id="'detallePuesto_' + ${p.id}"
+               id={'detallePuesto_'+puesto.id}
                tabIndex="-1">
               <div className="modal-dialog">
                   <div className="modal-content">

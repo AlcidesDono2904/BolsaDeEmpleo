@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useEffect, useState} from "react";
-import JobCard from "../components/puestos/jobCard.jsx";
+import JobCard from "../components/puestos/JobCard.jsx";
 import API_URL from "../services/api.js";
 
 function Home() {
@@ -14,15 +14,16 @@ function Home() {
     }, []);
 
     return (
-        <main className="flex-fill" style={{maxWidth: '1500px', margin: '0 auto'}}>
+        <div>
             <div className="container mt-4">
                 <h2>Bolsa de Empleo</h2>
                 <p>Últimos 5 puestos públicos</p>
             </div>
+
             <div className="row">
-            {Puestos.map(puesto => <JobCard puesto={puesto}/>)}
+                {Puestos.map(puesto => <JobCard key={puesto.id} puesto={puesto}/>)}
             </div>
-        </main>
+        </div>
     );
 }
 

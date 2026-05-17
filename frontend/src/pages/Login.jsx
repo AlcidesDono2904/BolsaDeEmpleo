@@ -1,31 +1,30 @@
 import {useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import axios from "axios";
 import API_URL from "../services/api";
+import {AuthContext} from "../context/AuthProvider.jsx";
 
 function Login() {
 
+    const { login } = useContext(AuthContext);
     const navigate = useNavigate();
     const [correo, setCorreo] = useState("");
     const [clave, setClave] = useState("");
 
-    const login = async (e) => {
+    const loginUser = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post(`${API_URL}/api/auth/login`, {
-                correo: correo, passwordHash: clave
+                correo: correo, password: clave
             });
-            if (response.data) {
-
-                localStorage.setItem("usuario", JSON.stringify(response.data));
-                navigate("/dashboard");
-
-                localStorage.setItem("usuario", JSON.stringify(response.data));
-                if (response.data.rol === "ADMIN") {
+            const data = response.data;
+            if (data) {
+                login(data.token);
+                if (data.rol === "ADMIN") {
                     navigate("/admin");
-                } else if (response.data.rol === "EMPRESA") {
+                } else if (data.rol === "EMPRESA") {
                     navigate("/empresa");
-                } else if (response.data.rol === "OFERENTE") {
+                } else if (data.rol === "OFERENTE") {
                     navigate("/oferente");
                 }
 
@@ -34,13 +33,13 @@ function Login() {
             }
         } catch (error) {
             console.log(error);
-            alert("Credenciales incorrectas");
+            alert("Credenciales incorrectas, error");
         }
     };
 
     return (<div className="container mt-5">
         <h2>Login</h2>
-        <form onSubmit={login}>
+        <form onSubmit={loginUser}>
             <input
                 className="form-control mb-3"
                 placeholder="Correo"

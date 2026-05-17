@@ -44,6 +44,6 @@ public class AuthService {
                         usuario.getRol()
                 );
 
-        return new LoginResponseDTO(token);
+        return new LoginResponseDTO(token, usuario.getRol(), usuario.getCorreo());
     }
 }
