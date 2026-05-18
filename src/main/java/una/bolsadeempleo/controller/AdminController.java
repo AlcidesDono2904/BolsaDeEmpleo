@@ -13,6 +13,7 @@ import una.bolsadeempleo.util.PdfReportGenerator;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
+@Deprecated
 @Controller
 public class AdminController {
 

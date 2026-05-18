@@ -1,6 +1,6 @@
 function Footer() {
     return (
-        <footer className="bg-dark text-white mt-5 p-3" th:fragment="footer">
+        <footer className="bg-dark text-white mt-5 p-3">
             <div className="container d-flex justify-content-between">
                 <div>
                     Bolsa de Empleo<br/>
