@@ -1,4 +1,6 @@
-package una.bolsadeempleo.logic;
+package una.bolsadeempleo.logic.DTO;
+
+import una.bolsadeempleo.logic.Valor;
 
 public class TipoCambioDTO {
     private Valor venta;

@@ -2,6 +2,8 @@ package una.bolsadeempleo.logic;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import una.bolsadeempleo.logic.DTO.PuestoDTO;
+import una.bolsadeempleo.logic.services.CambioService;
 import una.bolsadeempleo.repository.*;
 
 import java.math.BigDecimal;
@@ -25,6 +27,11 @@ public class Service {
     @Autowired
     private OferenteHabilidadRepository oferenteHabilidadRepository;
 
+    @Autowired
+    private CambioService cambioService;
+
+    @Autowired
+    private SesionUsuarioBean sesion;
 
     // --- Usuario ---
     public Usuario saveUsuario(Usuario usuario) {
@@ -62,6 +69,11 @@ public class Service {
         Usuario usuario = usuarioRepository.findByCorreo(correo);
         if (usuario != null && BCrypt.checkpw(password, usuario.getPasswordHash())) {
             System.out.println("Login exitoso para usuario: " + correo);
+            if (usuario.getAprobado()) {
+                sesion.login(correo, usuario.getRol());
+            } else {
+                System.out.println("Usuario no aprobado: " + correo);
+            }
             return usuario;
         }
         System.out.println("Login fallido para usuario: " + correo);
@@ -239,36 +251,77 @@ public class Service {
         oferenteRepository.save(oferente);
     }
 
+    //logica de buscar candidatos
+    /*public List<CandidatoResultado> buscarCandidatosParaPuesto(Integer idPuesto) {
+
+        Puesto puesto = puestoRepository.findById(idPuesto).orElse(null);
+        if (puesto == null) return List.of();
+
+        // características requeridas del puesto
+        var requeridas = puesto.getPuestoCaracteristicas();
+
+        var oferentes = oferenteRepository.findAll();
+        List<CandidatoResultado> resultados = new ArrayList<>();
+
+        for (Oferente o : oferentes) {
+
+            int total = requeridas.size();
+            int cumple = 0;
+
+            for (PuestoCaracteristica req : requeridas) {
+
+                for (OferenteHabilidad hab : o.getOferenteHabilidads()) {
+
+                    if (hab.getIdCaracteristica().getId().equals(req.getIdCaracteristica().getId()) &&
+                            hab.getNivel() >= req.getNivelRequerido()) {
+
+                        cumple++;
+                    }
+                }
+            }
+
+            double porcentaje = total == 0 ? 0 : (cumple * 100.0) / total;
+
+            resultados.add(new CandidatoResultado(o, cumple, total, porcentaje));
+        }
+
+        return resultados;
+    }
+*/
+    public Puesto obtenerPuesto(Integer id) {
+        return puestoRepository.findById(id).orElse(null);
+    }
+
+    public Oferente obtenerOferente(Integer id) {
+        return oferenteRepository.findById(id).orElse(null);
+    }
+
     public List<OferenteHabilidad> getHabilidadesDeOferente(Integer idOferente) {
         return oferenteHabilidadRepository.findByIdOferenteId(idOferente);
     }
 
     public void agregarHabilidad(Integer usuarioId, Integer idCaracteristica, Integer nivel) {
 
-        // 1. Buscar el oferente real basado en el usuario que está logueado
+
         Oferente oferente = oferenteRepository.findByIdUsuarioId(usuarioId);
 
         if (oferente == null) {
             throw new RuntimeException("No existe oferente asociado al usuario " + usuarioId);
         }
 
-        // 2. Buscar la característica seleccionada
         Caracteristica c = caracteristicaRepository.findById(idCaracteristica)
                 .orElseThrow(() -> new RuntimeException("Característica no encontrada"));
 
-        // 3. Crear el ID compuesto
         OferenteHabilidadId ohId = new OferenteHabilidadId();
-        ohId.setIdOferente(oferente.getId());         // este SÍ es el correcto
+        ohId.setIdOferente(oferente.getId());
         ohId.setIdCaracteristica(c.getId());
 
-        // 4. Crear la habilidad
         OferenteHabilidad oh = new OferenteHabilidad();
         oh.setId(ohId);
         oh.setIdOferente(oferente);
         oh.setIdCaracteristica(c);
         oh.setNivel(nivel);
 
-        // 5. Guardar
         oferenteHabilidadRepository.save(oh);
     }
 
@@ -400,5 +453,29 @@ public class Service {
 
     public Puesto findPuesto(Integer idPuesto) {
         return puestoRepository.findById(idPuesto).orElse(null);
+    }
+
+    // DTO's
+    public List<PuestoDTO> obtenerUltimosPuestosDTO() {
+        List<Puesto> puestos = this.obtenerUltimosPuestos();
+        List<Double> salarios = cambioService.calcularVenta(puestos);
+
+        List<PuestoDTO> response = new ArrayList<>();
+
+        for (int i = 0; i < puestos.size(); i++) {
+
+            Puesto puesto = puestos.get(i);
+
+            PuestoDTO dto = new PuestoDTO();
+
+            dto.setId(puesto.getId());
+            dto.setNombreEmpresa(puesto.getIdEmpresa().getNombre());
+            dto.setDescripcion(puesto.getDescripcion());
+            dto.setSalarioUsd(puesto.getSalarioUsd().doubleValue());
+            dto.setSalarioColones(salarios.get(i));
+
+            response.add(dto);
+        }
+        return response;
     }
 }
