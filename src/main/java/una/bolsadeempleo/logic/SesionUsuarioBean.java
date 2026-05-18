@@ -3,6 +3,7 @@ package una.bolsadeempleo.logic;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+@Deprecated
 @Component
 @SessionScope
 public class SesionUsuarioBean {

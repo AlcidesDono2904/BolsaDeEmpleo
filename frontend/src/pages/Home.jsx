@@ -1,27 +1,29 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useEffect, useState} from "react";
 import JobCard from "../components/puestos/JobCard.jsx";
-import API_URL from "../services/api.js";
+import apiClient from "../services/apiClient.js";
 
 function Home() {
+    //TODO: agregar manejo de errores
 
-    const [Puestos, setPuestos] = useState([]);
+    const [puestos, setPuestos] = useState([]);
     
     useEffect(() => {
-        fetch(`${API_URL}/api/public/ultimosPuestos`)
-            .then(res => res.json())
-            .then(data => setPuestos(data));
+        apiClient.get(`/api/public/ultimosPuestos`)
+            .then(response => {
+                 setPuestos(response.data);
+            })
     }, []);
 
     return (
-        <div>
+        <div className="container mt-4">
             <div className="container mt-4">
                 <h2>Bolsa de Empleo</h2>
                 <p>Últimos 5 puestos públicos</p>
             </div>
 
             <div className="row">
-                {Puestos.map(puesto => <JobCard key={puesto.id} puesto={puesto}/>)}
+                {puestos.map(puesto => <JobCard key={puesto.id} puesto={puesto}/>)}
             </div>
         </div>
     );
