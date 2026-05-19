@@ -1,17 +1,21 @@
+import {Link} from "react-router-dom";
+
 function EmpresaDashboard() {
-
-    const usuario =
-        JSON.parse(localStorage.getItem("usuario"));
-
     return (
+        <div className="container mt-4">
+            <h3>Empresa</h3>
 
-        <div className="container mt-5">
+            <p className="text-muted">
+                Puestos y candidatos.
+            </p>
 
-            <h2>Empresa Dashboard</h2>
+            <Link to="/empresa/puestos" className="btn btn-primary me-2">
+                  Ver mis puestos
+            </Link>
 
-            <hr />
-
-            <h4>{usuario?.correo}</h4>
+            <Link to="/empresa/publicar" className="btn btn-primary me-2">
+                Publicar nuevo puesto
+            </Link>
 
         </div>
     );

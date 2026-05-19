@@ -6,6 +6,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import MainLayout from "./components/layout/MainLayout.jsx";
 import EmpresasPendientes from "./pages/admin/EmpresasPendientes.jsx";
 import GenerarClave from "./pages/admin/GenerarClave.jsx";
+import EmpresaDashboard from "./pages/empresa/EmpresaDashboard.jsx";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
                     <Route path="/admin" element={<AdminDashboard/>}/>
                     <Route path="/admin/empresas-pendientes" element={<EmpresasPendientes/>}/>
                     <Route path="/admin/generarClave/:id" element={<GenerarClave/>}/>
+                    <Route path="/empresa" element={<EmpresaDashboard/>}/>
                 </Routes>
             </MainLayout>
         </BrowserRouter>)
