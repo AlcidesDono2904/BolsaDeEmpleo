@@ -13,7 +13,7 @@ import apiClient from "../../services/apiClient.js";
             console.warn("No hay usuario autenticado");
             return;
         }
-        apiClient.get("/api/admin/empresasPendientes")
+        apiClient.get("/api/admin/empresas-pendientes")
             .then(response => {
                 setData(response.data);
             })

@@ -30,7 +30,7 @@ public class AdminController {
         }
         return "/admin/admin-dashboard";
     }
-
+/*
     @GetMapping("/admin/empresas-pendientes")
     public String empresasPendientes(Model model) {
         if (!sesion.hasAdminPermissions()) {
@@ -39,7 +39,7 @@ public class AdminController {
         model.addAttribute("lista", service.listarEmpresasPendientes());
 
         return "/admin/empresas-pendientes";
-    }
+    }*/
 
     @GetMapping("/admin/oferentes-pendientes")
     public String oferentesPendientes(Model model) {
