@@ -1,17 +1,20 @@
+import {Link} from "react-router-dom";
+
 function OferenteDashboard() {
-
-    const usuario =
-        JSON.parse(localStorage.getItem("usuario"));
-
     return (
+        <div className="container mt-4">
+            <h3>Oferente</h3>
 
-        <div className="container mt-5">
+            <p className="text-muted">
+                Habilidades y CV.
+            </p>
 
-            <h2>Oferente Dashboard</h2>
-
-            <hr />
-
-            <h4>{usuario?.correo}</h4>
+            <Link to="/oferente/habilidades" className="btn btn-primary me-2">
+                Mis Habilidades
+            </Link>
+            <Link to="/oferente/cv" className="btn btn-primary me-2">
+                Mi CV
+            </Link>
 
         </div>
     );
