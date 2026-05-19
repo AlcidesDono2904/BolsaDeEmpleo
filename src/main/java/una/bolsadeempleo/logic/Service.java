@@ -58,12 +58,17 @@ public class Service {
     public void aprobarUsuario(Usuario u) {
         String password = u.getPasswordHash();
         Usuario usuario = usuarioRepository.findById(u.getId()).orElse(null);
-        if (usuario != null) {
-            usuario.setAprobado(true);
-            String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
-            usuario.setPasswordHash(passwordHash);
-            usuarioRepository.save(usuario);
+        if (usuario == null) {
+            throw new RuntimeException("Usuario no encontrado con id: " + u.getId());
+        } else if (password == null || password.isEmpty()) {
+            throw new RuntimeException("La contraseña no puede estar vacía");
+        } else if(usuario.getAprobado()) {
+            throw new RuntimeException("El usuario ya está aprobado");
         }
+        usuario.setAprobado(true);
+        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
+        usuario.setPasswordHash(passwordHash);
+        usuarioRepository.save(usuario);
     }
 
     public Usuario login(String correo, String password) {
