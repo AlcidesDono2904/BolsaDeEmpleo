@@ -7,7 +7,9 @@ import MainLayout from "./components/layout/MainLayout.jsx";
 import EmpresasPendientes from "./pages/admin/EmpresasPendientes.jsx";
 import GenerarClave from "./pages/admin/GenerarClave.jsx";
 import EmpresaDashboard from "./pages/empresa/EmpresaDashboard.jsx";
+import Puestos from "./pages/empresa/Puestos.jsx";
 import OferenteDashboard from "./pages/oferente/OferenteDashboard.jsx";
+
 
 function App() {
 
@@ -22,6 +24,7 @@ function App() {
                     <Route path="/admin/generarClave/:id" element={<GenerarClave/>}/>
                     <Route path="/empresa" element={<EmpresaDashboard/>}/>
                     <Route path="/oferente" element={<OferenteDashboard/>}/>
+                    <Route path="/empresa/puestos" element={<Puestos/>} />
                 </Routes>
             </MainLayout>
         </BrowserRouter>)
