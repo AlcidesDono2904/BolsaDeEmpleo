@@ -12,7 +12,7 @@ function EmpresaDashboard() {
             <Link to="/empresa/puestos" className="btn btn-primary me-2">
                   Ver mis puestos
             </Link>
-            <Link to="/empresa/publicar" className="btn btn-primary me-2">
+            <Link to="/empresa/publicar-puesto" className="btn btn-primary me-2">
                 Publicar nuevo puesto
             </Link>
 
