@@ -1,18 +1,31 @@
+import ListaCaracteristica from "../../components/caracteristicas/ListaCaracteristicas.jsx";
+import apiClient from "../../services/apiClient.js";
+import {useEffect, useState} from "react";
+import listaCaracteristicas from "../../components/caracteristicas/ListaCaracteristicas.jsx";
+
 function Caracteristicas() {
 
+    const [CaracteristicasLista, setCaracteristicasLista] = useState([{}]);
+
+    useEffect(() => {
+        apiClient.get(`/api/admin/caracteristicas`)
+            .then(response => {
+                setCaracteristicasLista(response.data);
+            })
+    }, []);
 
 
     return (
         <div className="container mt-4">
             <h3>Características</h3>
             <div className="row">
-                <!-- LISTA DE CATEGORIAS -->
+
                 <div className="col-md-7">
-                    <div th:replace="~{fragments/listarCaracteristicas :: listarCaracteristicas}"></div>
+                    <ListaCaracteristica  caracteristicas={CaracteristicasLista}/>
                 </div>
-                <!-- AGREGAR CARACTERISTICA -->
+
                 <div className="col-md-5">
-                    <div className="card p-3" style="background-color:#e8f5e9">
+                    <div className="card p-3" style={{backgroundColor:"#e8f5e9"}}>
                         <h6>Agregar Característica</h6>
                         <form action="/admin/agregarCaracteristica" method="POST">
                             <label htmlFor="nombreCaracteristica" className="form-label mt-2">Nombre</label>

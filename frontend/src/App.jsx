@@ -10,10 +10,11 @@ import EmpresaDashboard from "./pages/empresa/EmpresaDashboard.jsx";
 import Puestos from "./pages/empresa/Puestos.jsx";
 import PublicarPuesto from "./pages/empresa/PublicarPuesto";
 import OferenteDashboard from "./pages/oferente/OferenteDashboard.jsx";
+import Caracteristicas from "./pages/admin/Caracteristicas.jsx";
 
 
 function App() {
-
+// TODO: Add private routes and role-based access control
     return (
         <BrowserRouter>
             <MainLayout>
@@ -23,6 +24,7 @@ function App() {
                     <Route path="/admin" element={<AdminDashboard/>}/>
                     <Route path="/admin/empresas-pendientes" element={<EmpresasPendientes/>}/>
                     <Route path="/admin/generarClave/:id" element={<GenerarClave/>}/>
+                    <Route path="/admin/caracteristicas" element={<Caracteristicas/>}/>
                     <Route path="/empresa" element={<EmpresaDashboard/>}/>
                     <Route path="/empresa/puestos" element={<Puestos/>} />
                     <Route path="/empresa/publicar-puesto" element={<PublicarPuesto />}/>
