@@ -1,5 +1,6 @@
 function JobCard({ puesto }) {
     //TODO: agregar logica de "cargando"
+    //TODO: agregar modal con detalle del puesto (caracteristicas requeridas)
   return (
       <div key={puesto.id} className="col-md-4">
           <div className="card bg-light border-success mb-3">

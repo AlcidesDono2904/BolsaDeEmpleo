@@ -2,6 +2,7 @@ package una.bolsadeempleo.logic;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import una.bolsadeempleo.logic.DTO.CaracteristicaDTO;
 import una.bolsadeempleo.logic.DTO.PuestoDTO;
 import una.bolsadeempleo.logic.DTO.UsuarioPendienteDTO;
 import una.bolsadeempleo.logic.services.CambioService;
@@ -470,6 +471,22 @@ public class Service {
             UsuarioPendienteDTO dto = new UsuarioPendienteDTO();
             dto.setId(empresa.getId());
             dto.setCorreo(empresa.getIdUsuario().getCorreo());
+
+            response.add(dto);
+        }
+        return response;
+    }
+
+    public List<CaracteristicaDTO> listarCaracteristicasDTO() {
+        List<Caracteristica> caracteristicas = this.getTodasCaracteristicas();
+
+        List<CaracteristicaDTO> response = new ArrayList<>();
+
+        for (Caracteristica c : caracteristicas) {
+            CaracteristicaDTO dto = new CaracteristicaDTO();
+            dto.setId(c.getId());
+            dto.setNombre(c.getNombre());
+            dto.setPadre(c.getIdPadre() != null ? c.getIdPadre().getId() : null);
 
             response.add(dto);
         }

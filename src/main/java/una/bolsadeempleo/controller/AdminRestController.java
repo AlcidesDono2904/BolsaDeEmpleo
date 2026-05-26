@@ -3,6 +3,7 @@ package una.bolsadeempleo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import una.bolsadeempleo.logic.DTO.CaracteristicaDTO;
 import una.bolsadeempleo.logic.DTO.PasswordRequestDTO;
 import una.bolsadeempleo.logic.DTO.UsuarioPendienteDTO;
 import una.bolsadeempleo.logic.Service;
@@ -40,6 +41,17 @@ public class AdminRestController {
             return ResponseEntity.ok("Empresa aprobada");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error al aprobar empresa");
+        }
+    }
+
+    @GetMapping("/caracteristicas")
+    public ResponseEntity<List<CaracteristicaDTO>> caracteristicas() {
+        System.out.println("Llamada GET a /api/admin/caracteristicas");
+        try {
+            List<CaracteristicaDTO> caracteristicas = service.listarCaracteristicasDTO();
+            return ResponseEntity.ok(caracteristicas);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
         }
     }
 }

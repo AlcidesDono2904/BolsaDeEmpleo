@@ -24,7 +24,7 @@ function AuthProvider({ children }) {
         localStorage.setItem("token", token);
 
         const payload = jwtDecode(token);
-        console.log("Payload del token:", payload.ROL);
+
         setUsuario({
             correo: payload.sub,
             ROL: payload.ROL
