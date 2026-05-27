@@ -10,6 +10,7 @@ function Puestos() {
 
         apiClient.get("/api/empresa/puestos")
             .then((response) => {
+                console.log(response.data);
                 setPuestos(response.data);
             })
             .catch((error) => {

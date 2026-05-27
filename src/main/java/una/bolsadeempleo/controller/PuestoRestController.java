@@ -1,9 +1,12 @@
 package una.bolsadeempleo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import una.bolsadeempleo.logic.Caracteristica;
+import una.bolsadeempleo.logic.DTO.PuestoDTO;
 import una.bolsadeempleo.logic.Puesto;
 import una.bolsadeempleo.logic.Service;
 import una.bolsadeempleo.logic.Usuario;
@@ -24,12 +27,15 @@ public class PuestoRestController {
     private UsuarioRepository usuarioRepository;
 
     @GetMapping("/puestos")
-    public List<Puesto> verMisPuestos(
-            Authentication auth
-    ) {
+    public ResponseEntity<List<PuestoDTO>> obtenerPuestosEmpresa() {
 
-        return service.obtenerPuestosPorEmpresaCorreo(
-                auth.getName()
+        Authentication auth =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        String correo = auth.getName();
+
+        return ResponseEntity.ok(
+                service.obtenerPuestosPorEmpresaDTO(correo)
         );
     }
 
