@@ -5,11 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import una.bolsadeempleo.logic.Caracteristica;
+import una.bolsadeempleo.logic.*;
 import una.bolsadeempleo.logic.DTO.PuestoDTO;
-import una.bolsadeempleo.logic.Puesto;
-import una.bolsadeempleo.logic.Service;
-import una.bolsadeempleo.logic.Usuario;
 import una.bolsadeempleo.repository.UsuarioRepository;
 import java.util.Map;
 
@@ -79,5 +76,12 @@ public class PuestoRestController {
         Usuario usuario = usuarioRepository.findByCorreo(correo);
 
         service.desactivarPuesto(id, usuario.getId());
+    }
+
+    @GetMapping("/candidatos/{idPuesto}")
+    public List<CandidatoResultado> candidatos(
+            @PathVariable Integer idPuesto
+    ) {
+        return service.listarOferentesCandidatos(idPuesto);
     }
 }
