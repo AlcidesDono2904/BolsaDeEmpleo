@@ -507,6 +507,7 @@ public class Service {
             dto.setId(puesto.getId());
             dto.setDescripcion(puesto.getDescripcion());
             dto.setSalarioUsd(puesto.getSalarioUsd().doubleValue());
+            dto.setActivo(puesto.getActivo());
 
             response.add(dto);
         }

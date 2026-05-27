@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import apiClient from "../../services/apiClient";
+
 function ListaPuestos({ puestos }) {
 
     return (
@@ -10,6 +13,7 @@ function ListaPuestos({ puestos }) {
                 <th>Descripción</th>
                 <th>Salario</th>
                 <th>Activo</th>
+                <th>Acciones</th>
             </tr>
             </thead>
 
@@ -27,6 +31,32 @@ function ListaPuestos({ puestos }) {
 
                     <td>
                         {p.activo ? "Sí" : "No"}
+                    </td>
+
+                    <td>
+
+                        <button
+                            className="btn btn-danger btn-sm"
+                            onClick={() => {
+                                apiClient.put(`/api/empresa/puestos/desactivar/${p.id}`)
+                                    .then(() => {
+                                        window.location.reload();
+                                    })
+                                    .catch((error) => {
+                                        console.error(error);
+                                    });
+                            }}
+                        >
+                            Desactivar
+                        </button>
+
+                        <Link
+                            to={`/empresa/candidatos/${p.id}`}
+                            className="btn btn-primary btn-sm"
+                        >
+                            Buscar candidatos
+                        </Link>
+
                     </td>
 
                 </tr>

@@ -69,4 +69,15 @@ public class PuestoRestController {
                 caracteristicas
         );
     }
+
+    @PutMapping("/puestos/desactivar/{id}")
+    public void desactivarPuesto(@PathVariable Integer id,
+                                 Authentication authentication) {
+
+        String correo = authentication.getName();
+
+        Usuario usuario = usuarioRepository.findByCorreo(correo);
+
+        service.desactivarPuesto(id, usuario.getId());
+    }
 }
