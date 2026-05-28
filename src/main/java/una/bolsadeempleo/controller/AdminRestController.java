@@ -66,9 +66,14 @@ public class AdminRestController {
         try {
             Caracteristica nuevaCaracteristica = new Caracteristica();
             nuevaCaracteristica.setNombre(request.getNombre());
-            Caracteristica padre = new Caracteristica();
-            padre.setId(request.getIdPadre());
-            nuevaCaracteristica.setIdPadre(padre);
+            int idPadre = request.getIdPadre();
+
+            if (idPadre != 0) {
+                Caracteristica padre = new Caracteristica();
+                padre.setId(request.getIdPadre());
+                nuevaCaracteristica.setIdPadre(padre);
+            }
+
             service.saveCaracteristica(nuevaCaracteristica);
         } catch (Exception e) {
             e.printStackTrace();

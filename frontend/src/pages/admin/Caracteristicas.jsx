@@ -9,11 +9,18 @@ function Caracteristicas() {
     const [CaracteristicasLista, setCaracteristicasLista] = useState([]);
     const [caracteristicaSeleccionada, setCaracteristicaSeleccionada] = useState(null);
 
-    useEffect(() => {
+    const fetchCaracteristicas = () => {
         apiClient.get(`/api/admin/caracteristicas`)
             .then(response => {
                 setCaracteristicasLista(response.data);
             })
+            .catch(error => {
+                console.error("Error al obtener características:", error);
+            });
+    };
+
+    useEffect(() => {
+        fetchCaracteristicas();
     }, []);
 
 
@@ -30,7 +37,10 @@ function Caracteristicas() {
                 </div>
 
                 <div className="col-md-5">
-                    <PanelAgregarCaracteristica Caracteristicas={CaracteristicasLista} />
+                    <PanelAgregarCaracteristica
+                        Caracteristicas={CaracteristicasLista}
+                        onCaracteristicaCreada={fetchCaracteristicas}
+                    />
                 </div>
 
             </div>
