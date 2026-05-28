@@ -1,14 +1,7 @@
 import {useEffect, useState} from "react";
 
-function ListaCaracteristicas({ caracteristicas = [] }) {
-    // agregar enrutamiento segun admin u oferente
-    // arbol de caracteristicas
-    //pasr a a botoones
-    // tabla de caracteristicas
-    // cat seleccionada -> subcategorias...
-
+function ListaCaracteristicas({ caracteristicas = [], caracteristicaSeleccionada, setCaracteristicaSeleccionada }) {
     const [caracteristicasArbol, setCaracteristicasArbol] = useState([]);
-    const [caracteristicaSeleccionada, setCaracteristicaSeleccionada] = useState(null);
     const [caracteristicasHijas, setCaracteristicasHijas] = useState([]);
 
     useEffect(() => {
