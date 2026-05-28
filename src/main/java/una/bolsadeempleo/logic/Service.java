@@ -493,5 +493,26 @@ public class Service {
         return response;
     }
 
+    public List<PuestoDTO> obtenerPuestosPorEmpresaDTO(String correo) {
+
+        List<Puesto> puestos =
+                obtenerPuestosPorEmpresaCorreo(correo);
+
+        List<PuestoDTO> response = new ArrayList<>();
+
+        for (Puesto puesto : puestos) {
+
+            PuestoDTO dto = new PuestoDTO();
+
+            dto.setId(puesto.getId());
+            dto.setDescripcion(puesto.getDescripcion());
+            dto.setSalarioUsd(puesto.getSalarioUsd().doubleValue());
+            dto.setActivo(puesto.getActivo());
+
+            response.add(dto);
+        }
+
+        return response;
+    }
 
 }

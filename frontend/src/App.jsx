@@ -11,6 +11,7 @@ import Puestos from "./pages/empresa/Puestos.jsx";
 import PublicarPuesto from "./pages/empresa/PublicarPuesto";
 import OferenteDashboard from "./pages/oferente/OferenteDashboard.jsx";
 import Caracteristicas from "./pages/admin/Caracteristicas.jsx";
+import Candidatos from "./pages/empresa/Candidatos";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/empresa" element={<EmpresaDashboard/>}/>
                     <Route path="/empresa/puestos" element={<Puestos/>} />
                     <Route path="/empresa/publicar-puesto" element={<PublicarPuesto />}/>
+                    <Route path="/empresa/candidatos/:idPuesto" element={<Candidatos />} />
                     <Route path="/oferente" element={<OferenteDashboard/>}/>
                 </Routes>
             </MainLayout>

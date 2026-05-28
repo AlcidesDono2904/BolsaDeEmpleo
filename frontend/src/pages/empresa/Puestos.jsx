@@ -6,7 +6,7 @@ function Puestos() {
 
     const [puestos, setPuestos] = useState([]);
 
-    useEffect(() => {
+    function cargarPuestos() {
 
         apiClient.get("/api/empresa/puestos")
             .then((response) => {
@@ -15,7 +15,10 @@ function Puestos() {
             .catch((error) => {
                 console.error(error);
             });
+    }
 
+    useEffect(() => {
+        cargarPuestos();
     }, []);
 
     return (
@@ -24,7 +27,10 @@ function Puestos() {
 
             <h3>Mis puestos</h3>
 
-            <ListaPuestos puestos={puestos} />
+            <ListaPuestos
+                puestos={puestos}
+                recargar={cargarPuestos}
+            />
 
         </div>
     );

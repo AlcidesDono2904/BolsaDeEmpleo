@@ -6,6 +6,7 @@ public class PuestoDTO {
     private String nombreEmpresa;
     private Double salarioUsd;
     private Double salarioColones;
+    private Boolean activo;
 
     public PuestoDTO(Integer id, String descripcion, String nombreEmpresa, Double salarioUsd, Double salarioColones) {
         this.id = id;
@@ -57,5 +58,13 @@ public class PuestoDTO {
 
     public void setSalarioColones(Double salarioColones) {
         this.salarioColones = salarioColones;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 }
