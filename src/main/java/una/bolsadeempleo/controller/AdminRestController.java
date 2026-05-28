@@ -1,5 +1,6 @@
 package una.bolsadeempleo.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,32 @@ public class AdminRestController {
         }
     }
 
+    @GetMapping("/oferentes-pendientes")
+    public ResponseEntity<List<UsuarioPendienteDTO>> oferentesPendientes() {
+        System.out.println("Llamada GET a /api/admin/oferentes-pendientes");
+        try {
+            List<UsuarioPendienteDTO> oferentes = service.oferentesPendientesDTO();
+            return ResponseEntity.ok(oferentes);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    @PostMapping("/oferentes-pendientes")
+    public ResponseEntity<String> aprobarOferente(@RequestBody PasswordRequestDTO request) {
+        System.out.println("Llamada POST a /api/admin/oferentes-pendientes con id: " + request.getId());
+        try {
+            Usuario u = new Usuario();
+            u.setId(request.getId());
+            u.setPasswordHash(request.getPassword());
+
+            service.aprobarUsuario(u);
+            return ResponseEntity.ok("Empresa aprobada");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al aprobar empresa");
+        }
+    }
+
     @PostMapping("/empresas-pendientes")
     public ResponseEntity<String> aprobarEmpresa(@RequestBody PasswordRequestDTO request) {
         System.out.println("Llamada POST a /api/admin/empresas-pendientes con id: " + request.getId());
@@ -61,20 +88,10 @@ public class AdminRestController {
     }
 
     @PostMapping("/caracteristicas")
-    public ResponseEntity<String> agregarCaracteristica(@RequestBody NuevaCaracteristicaDTO request) {
+    public ResponseEntity<String> agregarCaracteristica(@Valid @RequestBody NuevaCaracteristicaDTO request) {
         System.out.println("Llamada POST a /api/admin/caracteristicas con nombre: " + request.getNombre() + " y idPadre: " + request.getIdPadre());
         try {
-            Caracteristica nuevaCaracteristica = new Caracteristica();
-            nuevaCaracteristica.setNombre(request.getNombre());
-            int idPadre = request.getIdPadre();
-
-            if (idPadre != 0) {
-                Caracteristica padre = new Caracteristica();
-                padre.setId(request.getIdPadre());
-                nuevaCaracteristica.setIdPadre(padre);
-            }
-
-            service.saveCaracteristica(nuevaCaracteristica);
+            service.agregarCaracteristica(request);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Error al agregar característica");

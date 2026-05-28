@@ -3,6 +3,7 @@ package una.bolsadeempleo.logic;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import una.bolsadeempleo.logic.DTO.CaracteristicaDTO;
+import una.bolsadeempleo.logic.DTO.NuevaCaracteristicaDTO;
 import una.bolsadeempleo.logic.DTO.PuestoDTO;
 import una.bolsadeempleo.logic.DTO.UsuarioPendienteDTO;
 import una.bolsadeempleo.logic.services.CambioService;
@@ -477,6 +478,20 @@ public class Service {
         return response;
     }
 
+    public List<UsuarioPendienteDTO> oferentesPendientesDTO() {
+        List<Oferente> oferentes = this.listarOferentesPendientes();
+
+        List<UsuarioPendienteDTO> response = new ArrayList<>();
+
+        for (Oferente oferente : oferentes) {
+            UsuarioPendienteDTO dto = new UsuarioPendienteDTO();
+            dto.setId(oferente.getId());
+            dto.setCorreo(oferente.getIdUsuario().getCorreo());
+            response.add(dto);
+        }
+        return response;
+    }
+
     public List<CaracteristicaDTO> listarCaracteristicasDTO() {
         List<Caracteristica> caracteristicas = this.getTodasCaracteristicas();
 
@@ -515,4 +530,17 @@ public class Service {
         return response;
     }
 
+    public void agregarCaracteristica(NuevaCaracteristicaDTO request) {
+        Caracteristica nuevaCaracteristica = new Caracteristica();
+        nuevaCaracteristica.setNombre(request.getNombre());
+        int idPadre = request.getIdPadre();
+
+        if (idPadre != 0) {
+            Caracteristica padre = new Caracteristica();
+            padre.setId(request.getIdPadre());
+            nuevaCaracteristica.setIdPadre(padre);
+        }
+
+        this.saveCaracteristica(nuevaCaracteristica);
+    }
 }
