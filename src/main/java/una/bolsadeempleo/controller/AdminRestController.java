@@ -2,15 +2,16 @@ package una.bolsadeempleo.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import una.bolsadeempleo.logic.Caracteristica;
-import una.bolsadeempleo.logic.DTO.CaracteristicaDTO;
-import una.bolsadeempleo.logic.DTO.NuevaCaracteristicaDTO;
-import una.bolsadeempleo.logic.DTO.PasswordRequestDTO;
-import una.bolsadeempleo.logic.DTO.UsuarioPendienteDTO;
+import una.bolsadeempleo.logic.DTO.*;
+import una.bolsadeempleo.logic.Puesto;
 import una.bolsadeempleo.logic.Service;
 import una.bolsadeempleo.logic.Usuario;
+import una.bolsadeempleo.util.PdfReportGenerator;
 
 import java.util.HashSet;
 import java.util.List;
@@ -97,6 +98,25 @@ public class AdminRestController {
             return ResponseEntity.status(500).body("Error al agregar característica");
         }
         return ResponseEntity.ok("Característica agregada");
+    }
+
+    @GetMapping("/reporte")
+    public ResponseEntity<byte[]> generarReporte(
+            @RequestParam int month,
+            @RequestParam int year) {
+        System.out.println("Llamada GET a /api/admin/reporte con mes: " + month + " y año: " + year);
+        try {
+            List<Puesto> puestos = service.listarPuestosPorMes(month, year);
+            byte[] pdfBytes = PdfReportGenerator.generarReportePuestos(puestos, month, year);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            "attachment; filename=reporte.pdf")
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(pdfBytes);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(null);
+        }
     }
 }
 
