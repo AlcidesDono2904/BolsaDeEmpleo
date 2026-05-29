@@ -1,10 +1,12 @@
-import {useParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 import FormGeneraClave from "../../components/admin/FormGeneraClave.jsx";
 import {useState} from "react";
 
 
 function GenerarClave() {
     const {id} = useParams();
+    const [searchParams] = useSearchParams();
+    const userType = searchParams.get("type") || "empresa";
 
     return (
         <div>
@@ -16,7 +18,7 @@ function GenerarClave() {
                         </div>
                         <div className="card-body">
                             <p><strong>Usuario:</strong> <span>{id}</span></p>
-                            <FormGeneraClave id={id}/>
+                            <FormGeneraClave id={id} userType={userType}/>
                         </div>
                     </div>
                 </div>

@@ -18,10 +18,11 @@ public class JwtService {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
-    public String generateToken(String correo, String rol) {
+    public String generateToken(String correo, String rol, Integer id) {
         return Jwts.builder()
                 .setSubject(correo)
                 .claim("ROL", rol)
+                .claim("id",id)
                 .setIssuedAt(new Date())
                 .setExpiration(
                         new Date(System.currentTimeMillis() + 86400000)
@@ -37,6 +38,15 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+    }
+
+    public int extractId(String token) {
+        return (int) Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("id");
     }
 
     public boolean isTokenValid(String token) {

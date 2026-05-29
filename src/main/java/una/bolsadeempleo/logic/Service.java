@@ -470,7 +470,7 @@ public class Service {
 
         for (Empresa empresa : empresas) {
             UsuarioPendienteDTO dto = new UsuarioPendienteDTO();
-            dto.setId(empresa.getId());
+            dto.setId(empresa.getIdUsuario().getId());
             dto.setCorreo(empresa.getIdUsuario().getCorreo());
 
             response.add(dto);
@@ -485,8 +485,9 @@ public class Service {
 
         for (Oferente oferente : oferentes) {
             UsuarioPendienteDTO dto = new UsuarioPendienteDTO();
-            dto.setId(oferente.getId());
+            dto.setId(oferente.getIdUsuario().getId());
             dto.setCorreo(oferente.getIdUsuario().getCorreo());
+
             response.add(dto);
         }
         return response;

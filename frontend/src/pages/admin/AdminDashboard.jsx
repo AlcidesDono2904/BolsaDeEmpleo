@@ -9,10 +9,10 @@ function AdminDashboard() {
                 Aprobaciones, catalogo de caracteristicas y reportes.
             </p>
 
-            <Link to="/admin/empresas-pendientes" className="btn btn-primary me-2">
+            <Link to="/admin/pendientes/empresa" className="btn btn-primary me-2">
                 Empresas Pendientes
             </Link>
-            <Link to="/admin/oferentes-pendientes" className="btn btn-primary me-2">
+            <Link to="/admin/pendientes/oferente" className="btn btn-primary me-2">
                 Oferentes Pendientes
             </Link>
             <Link to="/admin/caracteristicas" className="btn btn-primary me-2">

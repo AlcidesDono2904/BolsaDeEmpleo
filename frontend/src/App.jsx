@@ -13,7 +13,6 @@ import OferenteDashboard from "./pages/oferente/OferenteDashboard.jsx";
 import Caracteristicas from "./pages/admin/Caracteristicas.jsx";
 import Reportes from "./pages/admin/Reportes.jsx";
 import Candidatos from "./pages/empresa/Candidatos";
-import OferentesPendientes from "./pages/admin/OferentesPendientes.jsx";
 
 
 function App() {
@@ -25,8 +24,7 @@ function App() {
                     <Route path="/" element={<Home/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/admin" element={<AdminDashboard/>}/>
-                    <Route path="/admin/empresas-pendientes" element={<EmpresasPendientes/>}/>
-                    <Route path="/admin/oferentes-pendientes" element={<OferentesPendientes/>}/>
+                    <Route path="/admin/pendientes/:type" element={<EmpresasPendientes/>}/>
                     <Route path="/admin/generarClave/:id" element={<GenerarClave/>}/>
                     <Route path="/admin/caracteristicas" element={<Caracteristicas/>}/>
                     <Route path="/admin/reportes-puestos" element={<Reportes/>}/>
