@@ -1,7 +1,10 @@
 package una.bolsadeempleo.logic.DTO;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class CaracteristicaDTO {
     private Integer id;
+    @NotBlank
     private String nombre;
     private Integer padre;
 
