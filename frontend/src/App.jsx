@@ -13,6 +13,7 @@ import OferenteDashboard from "./pages/oferente/OferenteDashboard.jsx";
 import Caracteristicas from "./pages/admin/Caracteristicas.jsx";
 import Reportes from "./pages/admin/Reportes.jsx";
 import Candidatos from "./pages/empresa/Candidatos";
+import Habilidades from "./pages/oferente/Habilidades";
 
 
 function App() {
@@ -33,6 +34,8 @@ function App() {
                     <Route path="/empresa/publicar-puesto" element={<PublicarPuesto />}/>
                     <Route path="/empresa/candidatos/:idPuesto" element={<Candidatos />} />
                     <Route path="/oferente" element={<OferenteDashboard/>}/>
+                    <Route path="oferente/habilidades" element={<Habilidades/>}/>
+                    <Route path="*" element={<h1>404 Not Found</h1>} />
                 </Routes>
             </MainLayout>
         </BrowserRouter>)
