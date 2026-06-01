@@ -2,26 +2,31 @@ import {useState} from "react";
 import apiClient from "../../services/apiClient.js";
 import {Link, useNavigate} from "react-router-dom";
 
-function FormGeneraClave({id}) {
+function FormGeneraClave({id, userType = "empresa"}) {
     const navigate = useNavigate();
     const [password, setPassword] = useState("");
 
-    //TODO: add waiting state while the request is being processed
+    const getEndpoint = () => userType === "oferente"
+        ? `/api/admin/oferentes-pendientes`
+        : `/api/admin/empresas-pendientes`;
+
+    const getRedirectPath = () => `/admin/pendientes/${userType}`;
 
     function handleSubmit(event) {
         if (password.trim() === "") {
             alert("La clave no puede estar vacía");
             return;
         }
-        apiClient.post(`/api/admin/empresas-pendientes`, {id: id, password: password})
+
+        apiClient.post(getEndpoint(), {id: id, password: password})
             .then(response => {
                 alert(`Clave generada para el usuario ${id}`);
+                navigate(getRedirectPath());
             })
             .catch(error => {
                 console.error("Error al generar la clave:", error);
                 alert("Ocurrió un error al generar la clave. Por favor, inténtalo de nuevo.");
             });
-        navigate("/admin/empresas-pendientes");
     }
 
     return (
@@ -39,10 +44,8 @@ function FormGeneraClave({id}) {
             </div>
 
             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                <Link to="/admin/empresas-pendientes" className="btn btn-secondary">Cancelar</Link>
-                <button onClick={() => handleSubmit()} type="button" className="btn btn-success">Aprobar y generar
-                    clave
-                </button>
+                <Link to={getRedirectPath()} className="btn btn-secondary">Cancelar</Link>
+                <button onClick={() => handleSubmit()} type="button" className="btn btn-success">Aprobar y generar clave</button>
             </div>
         </div>
     );

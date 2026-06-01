@@ -46,6 +46,9 @@ public class SecurityConfig {
                     .requestMatchers(
                             "/api/oferente/**"
                     ).hasRole("OFERENTE")
+                    .requestMatchers(
+                            "/api/oferentes/**"
+                    ).hasRole("OFERENTE")
                     .anyRequest()
                     .authenticated()
             )

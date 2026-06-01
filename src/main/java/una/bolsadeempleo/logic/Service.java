@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import una.bolsadeempleo.logic.DTO.CaracteristicaDTO;
 import una.bolsadeempleo.logic.DTO.NuevaCaracteristicaDTO;
+import una.bolsadeempleo.logic.DTO.OferenteHabilidadDTO;
 import una.bolsadeempleo.logic.DTO.PuestoDTO;
 import una.bolsadeempleo.logic.DTO.UsuarioPendienteDTO;
 import una.bolsadeempleo.logic.services.CambioService;
@@ -273,8 +274,6 @@ public class Service {
     }
 
     public void agregarHabilidad(Integer usuarioId, Integer idCaracteristica, Integer nivel) {
-
-
         Oferente oferente = oferenteRepository.findByIdUsuarioId(usuarioId);
 
         if (oferente == null) {
@@ -470,7 +469,7 @@ public class Service {
 
         for (Empresa empresa : empresas) {
             UsuarioPendienteDTO dto = new UsuarioPendienteDTO();
-            dto.setId(empresa.getId());
+            dto.setId(empresa.getIdUsuario().getId());
             dto.setCorreo(empresa.getIdUsuario().getCorreo());
 
             response.add(dto);
@@ -485,8 +484,9 @@ public class Service {
 
         for (Oferente oferente : oferentes) {
             UsuarioPendienteDTO dto = new UsuarioPendienteDTO();
-            dto.setId(oferente.getId());
+            dto.setId(oferente.getIdUsuario().getId());
             dto.setCorreo(oferente.getIdUsuario().getCorreo());
+
             response.add(dto);
         }
         return response;
@@ -542,5 +542,38 @@ public class Service {
         }
 
         this.saveCaracteristica(nuevaCaracteristica);
+    }
+
+    public List<OferenteHabilidadDTO> listarCaracteristicasOferenteDTO(String correo) {
+        Usuario usuario = usuarioRepository.findByCorreo(correo);
+        if (usuario == null) {
+            return new ArrayList<>();
+        }
+        Oferente oferente = oferenteRepository.findByIdUsuarioId(usuario.getId());
+        if (oferente == null) {
+            return new ArrayList<>();
+        }
+        List<OferenteHabilidad> habilidades = oferenteHabilidadRepository.findByIdOferenteId(oferente.getId());
+
+        List<OferenteHabilidadDTO> response = new ArrayList<>();
+
+        for (OferenteHabilidad oh : habilidades) {
+            Caracteristica c = oh.getIdCaracteristica();
+            OferenteHabilidadDTO dto = new OferenteHabilidadDTO();
+            dto.setId(c.getId());
+            dto.setNombre(c.getNombre());
+            dto.setPadre(c.getIdPadre() != null ? c.getIdPadre().getId() : null);
+            dto.setNivel(oh.getNivel());
+
+            response.add(dto);
+        }
+        return response;
+    }
+
+    public void agregarCaracteristicaOferente(String correo, Long caracteristicaId) {
+    }
+
+    public int obtenerIdUsuarioPorCorreo(String correo) {
+        return usuarioRepository.findByCorreo(correo).getId();
     }
 }

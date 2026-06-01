@@ -56,9 +56,10 @@ public class AdminRestController {
             u.setPasswordHash(request.getPassword());
 
             service.aprobarUsuario(u);
-            return ResponseEntity.ok("Empresa aprobada");
+            return ResponseEntity.ok("Oferente aprobada");
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al aprobar empresa");
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error al aprobar Oferente");
         }
     }
 
@@ -73,6 +74,7 @@ public class AdminRestController {
             service.aprobarUsuario(u);
             return ResponseEntity.ok("Empresa aprobada");
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(500).body("Error al aprobar empresa");
         }
     }

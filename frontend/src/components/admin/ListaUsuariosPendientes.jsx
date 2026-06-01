@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 
-function ListaUsuariosPendientes({ usuariosPendientes }) {
+function ListaUsuariosPendientes({ usuariosPendientes, userType = "empresa" }) {
 
     return (
         <table className="table table-striped mt-3">
@@ -16,7 +16,7 @@ function ListaUsuariosPendientes({ usuariosPendientes }) {
                         <td>{usuario.correo}</td>
                         <td>
                             <Link className={"btn btn-success btn-sm"}
-                                  to={`/admin/generarClave/${usuario.id}`}>
+                                  to={`/admin/generarClave/${usuario.id}?type=${userType}`}>
                                 Generar clave
                             </Link>
                         </td>
