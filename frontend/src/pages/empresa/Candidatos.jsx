@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 
 function Candidatos() {
@@ -30,28 +30,38 @@ function Candidatos() {
 
                 <thead>
                 <tr>
-                    <th>Nombre</th>
-                    <th>Compatibilidad</th>
-                    <th>Requisitos alcanzados</th>
+                    <th>Oferente</th>
+                    <th>Requisitos cumplidos</th>
+                    <th>% Coincidencia</th>
+                    <th></th>
                 </tr>
                 </thead>
 
                 <tbody>
 
-                {candidatos.map((c, index) => (
+                {candidatos.map((c) => (
 
-                    <tr key={index}>
+                    <tr key={c.id}>
 
                         <td>
                             {c.nombre} {c.apellido}
                         </td>
 
                         <td>
-                            {c.porcentajeCompatibilidad}%
+                            {c.requisitosAlcanzados}
                         </td>
 
                         <td>
-                            {c.requisitosAlcanzados}
+                            {c.porcentajeCompatibilidad.toFixed(2)}%
+                        </td>
+
+                        <td>
+                            <Link
+                                to={`/empresa/candidatos/detalle/${c.id}`}
+                                className="btn btn-outline-primary btn-sm"
+                            >
+                                Ver detalle
+                            </Link>
                         </td>
 
                     </tr>
@@ -61,6 +71,13 @@ function Candidatos() {
                 </tbody>
 
             </table>
+
+            <Link
+                to="/empresa/puestos"
+                className="btn btn-secondary"
+            >
+                Volver
+            </Link>
 
         </div>
     );
