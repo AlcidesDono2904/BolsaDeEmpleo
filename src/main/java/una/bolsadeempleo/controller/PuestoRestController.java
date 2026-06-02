@@ -83,4 +83,11 @@ public class PuestoRestController {
     ) {
         return service.listarOferentesCandidatosDTO(idPuesto);
     }
+
+    @GetMapping("/candidatos/detalle/{idOferente}")
+    public Oferente detalleCandidato(
+            @PathVariable Integer idOferente
+    ) {
+        return service.obtenerOferente(idOferente);
+    }
 }

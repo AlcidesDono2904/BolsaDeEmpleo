@@ -9,6 +9,7 @@ import GenerarClave from "./pages/admin/GenerarClave.jsx";
 import EmpresaDashboard from "./pages/empresa/EmpresaDashboard.jsx";
 import Puestos from "./pages/empresa/Puestos.jsx";
 import PublicarPuesto from "./pages/empresa/PublicarPuesto";
+import DetalleCandidato from "./pages/empresa/DetalleCandidato";
 import OferenteDashboard from "./pages/oferente/OferenteDashboard.jsx";
 import Caracteristicas from "./pages/admin/Caracteristicas.jsx";
 import Reportes from "./pages/admin/Reportes.jsx";
@@ -33,6 +34,7 @@ function App() {
                     <Route path="/empresa/puestos" element={<Puestos/>} />
                     <Route path="/empresa/publicar-puesto" element={<PublicarPuesto />}/>
                     <Route path="/empresa/candidatos/:idPuesto" element={<Candidatos />} />
+                    <Route path="/empresa/candidatos/detalle/:idOferente" element={<DetalleCandidato />}/>
                     <Route path="/oferente" element={<OferenteDashboard/>}/>
                     <Route path="oferente/habilidades" element={<Habilidades/>}/>
                     <Route path="*" element={<h1>404 Not Found</h1>} />
