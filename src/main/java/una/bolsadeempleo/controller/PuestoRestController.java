@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import una.bolsadeempleo.logic.*;
+import una.bolsadeempleo.logic.DTO.CaracteristicaDTO;
 import una.bolsadeempleo.logic.DTO.PuestoDTO;
 import una.bolsadeempleo.repository.UsuarioRepository;
 import java.util.Map;
@@ -37,11 +38,8 @@ public class PuestoRestController {
     }
 
     @GetMapping("/caracteristicas")
-    public List<Caracteristica> listarCaracteristicas() {
-
-        return service.listarCaracteristicas(
-                new Caracteristica()
-        );
+    public List<CaracteristicaDTO> listarCaracteristicas() {
+        return service.listarCaracteristicasDTO();
     }
 
     @PostMapping("/guardar-puesto")

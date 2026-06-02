@@ -61,7 +61,7 @@ function FormPublicarPuesto({ caracteristicas }) {
                 alert("Error al publicar");
             });
     }
-
+    console.log(caracteristicas);
     return (
 
         <form
@@ -83,7 +83,7 @@ function FormPublicarPuesto({ caracteristicas }) {
                     }}
                 >
 
-                    {caracteristicas[0]?.caracteristicas?.map((c) => (
+                    {caracteristicas.map((c) => (
                         <div
                             className="form-check"
                             key={c.id}
@@ -100,14 +100,11 @@ function FormPublicarPuesto({ caracteristicas }) {
                                 }
                             />
 
-                            <label
-                                className="form-check-label"
-                            >
+                            <label className="form-check-label">
                                 {c.nombre}
                             </label>
 
                         </div>
-
                     ))}
 
                 </div>
