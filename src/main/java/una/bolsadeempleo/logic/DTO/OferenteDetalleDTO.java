@@ -1,4 +1,5 @@
 package una.bolsadeempleo.logic.DTO;
+import java.util.List;
 
 public class OferenteDetalleDTO {
 
@@ -10,7 +11,17 @@ public class OferenteDetalleDTO {
     private String residencia;
     private String correo;
 
+    private List<HabilidadDTO> habilidades;
+
     public OferenteDetalleDTO() {
+    }
+
+    public List<HabilidadDTO> getHabilidades() {
+        return habilidades;
+    }
+
+    public void setHabilidades(List<HabilidadDTO> habilidades) {
+        this.habilidades = habilidades;
     }
 
     public Integer getId() {
