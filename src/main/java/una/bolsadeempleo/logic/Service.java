@@ -2,11 +2,7 @@ package una.bolsadeempleo.logic;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import una.bolsadeempleo.logic.DTO.CaracteristicaDTO;
-import una.bolsadeempleo.logic.DTO.NuevaCaracteristicaDTO;
-import una.bolsadeempleo.logic.DTO.OferenteHabilidadDTO;
-import una.bolsadeempleo.logic.DTO.PuestoDTO;
-import una.bolsadeempleo.logic.DTO.UsuarioPendienteDTO;
+import una.bolsadeempleo.logic.DTO.*;
 import una.bolsadeempleo.logic.services.CambioService;
 import una.bolsadeempleo.repository.*;
 
@@ -439,6 +435,46 @@ public class Service {
     }
 
     // DTO's
+
+    public List<CandidatoDTO> listarOferentesCandidatosDTO(Integer idPuesto) {
+
+        List<CandidatoResultado> resultados =
+                listarOferentesCandidatos(idPuesto);
+
+        List<CandidatoDTO> response =
+                new ArrayList<>();
+
+        for (CandidatoResultado r : resultados) {
+
+            CandidatoDTO dto =
+                    new CandidatoDTO();
+
+            dto.setId(
+                    r.getOferente().getId()
+            );
+
+            dto.setNombre(
+                    r.getOferente().getNombre()
+            );
+
+            dto.setApellido(
+                    r.getOferente().getApellido()
+            );
+
+            dto.setPorcentajeCompatibilidad(
+                    r.getPorcentajeCompatibilidad()
+            );
+
+            dto.setRequisitosAlcanzados(
+                    r.getRequisitosAlcanzados()
+            );
+
+            response.add(dto);
+        }
+
+        return response;
+    }
+
     public List<PuestoDTO> obtenerUltimosPuestosDTO() {
         List<Puesto> puestos = this.obtenerUltimosPuestos();
         List<Double> salarios = cambioService.calcularVenta(puestos);

@@ -43,7 +43,7 @@ function Candidatos() {
                     <tr key={index}>
 
                         <td>
-                            {c.oferente.nombre} {c.oferente.apellido}
+                            {c.nombre} {c.apellido}
                         </td>
 
                         <td>

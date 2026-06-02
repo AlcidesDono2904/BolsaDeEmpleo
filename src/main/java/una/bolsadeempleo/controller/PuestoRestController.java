@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import una.bolsadeempleo.logic.*;
+import una.bolsadeempleo.logic.DTO.CandidatoDTO;
 import una.bolsadeempleo.logic.DTO.CaracteristicaDTO;
 import una.bolsadeempleo.logic.DTO.PuestoDTO;
 import una.bolsadeempleo.repository.UsuarioRepository;
@@ -77,9 +78,9 @@ public class PuestoRestController {
     }
 
     @GetMapping("/candidatos/{idPuesto}")
-    public List<CandidatoResultado> candidatos(
+    public List<CandidatoDTO> candidatos(
             @PathVariable Integer idPuesto
     ) {
-        return service.listarOferentesCandidatos(idPuesto);
+        return service.listarOferentesCandidatosDTO(idPuesto);
     }
 }
