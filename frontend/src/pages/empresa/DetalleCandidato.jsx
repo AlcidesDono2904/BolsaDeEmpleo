@@ -14,6 +14,7 @@ function DetalleCandidato() {
             `/api/empresa/candidatos/detalle/${idOferente}`
         )
             .then((response) => {
+                console.log(JSON.stringify(response.data, null, 2));
                 setOferente(response.data);
             })
             .catch((error) => {
@@ -43,7 +44,7 @@ function DetalleCandidato() {
                 <b>Identificación:</b> {oferente.identificacion}
                 <br />
 
-                <b>Email:</b> {oferente.idUsuario?.correo}
+                <b>Email:</b> {oferente.correo}
                 <br />
 
                 <b>Teléfono:</b> {oferente.telefono}
@@ -66,7 +67,7 @@ function DetalleCandidato() {
 
                 <tbody>
 
-                {oferente.oferenteHabilidads?.map((h, index) => (
+                {oferente.habilidads?.map((h, index) => (
 
                     <tr key={index}>
 

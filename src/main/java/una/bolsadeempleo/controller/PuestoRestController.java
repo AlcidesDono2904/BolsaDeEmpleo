@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import una.bolsadeempleo.logic.*;
 import una.bolsadeempleo.logic.DTO.CandidatoDTO;
 import una.bolsadeempleo.logic.DTO.CaracteristicaDTO;
+import una.bolsadeempleo.logic.DTO.OferenteDetalleDTO;
 import una.bolsadeempleo.logic.DTO.PuestoDTO;
 import una.bolsadeempleo.repository.UsuarioRepository;
 import java.util.Map;
@@ -85,9 +86,22 @@ public class PuestoRestController {
     }
 
     @GetMapping("/candidatos/detalle/{idOferente}")
-    public Oferente detalleCandidato(
+    public OferenteDetalleDTO detalleCandidato(
             @PathVariable Integer idOferente
     ) {
-        return service.obtenerOferente(idOferente);
+
+        Oferente o = service.obtenerOferente(idOferente);
+
+        OferenteDetalleDTO dto = new OferenteDetalleDTO();
+
+        dto.setId(o.getId());
+        dto.setNombre(o.getNombre());
+        dto.setApellido(o.getApellido());
+        dto.setIdentificacion(o.getIdentificacion());
+        dto.setTelefono(o.getTelefono());
+        dto.setResidencia(o.getResidencia());
+        dto.setCorreo(o.getIdUsuario().getCorreo());
+
+        return dto;
     }
 }
