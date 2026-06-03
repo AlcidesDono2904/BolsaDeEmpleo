@@ -68,12 +68,12 @@ function DetalleCandidato() {
 
                 <tbody>
 
-                {oferente.habilidads?.map((h, index) => (
+                {oferente.habilidades?.map((h, index) => (
 
                     <tr key={index}>
 
                         <td>
-                            {h.idCaracteristica?.nombre}
+                            {h.nombre}
                         </td>
 
                         <td>

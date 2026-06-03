@@ -6,13 +6,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import una.bolsadeempleo.logic.*;
-import una.bolsadeempleo.logic.DTO.CandidatoDTO;
-import una.bolsadeempleo.logic.DTO.CaracteristicaDTO;
-import una.bolsadeempleo.logic.DTO.OferenteDetalleDTO;
-import una.bolsadeempleo.logic.DTO.PuestoDTO;
+import una.bolsadeempleo.logic.DTO.*;
 import una.bolsadeempleo.repository.UsuarioRepository;
+import java.util.ArrayList;
 import java.util.Map;
-
 import java.util.List;
 
 @RestController
@@ -101,6 +98,25 @@ public class PuestoRestController {
         dto.setTelefono(o.getTelefono());
         dto.setResidencia(o.getResidencia());
         dto.setCorreo(o.getIdUsuario().getCorreo());
+
+        List<HabilidadDTO> habilidades = new ArrayList<>();
+
+        for (OferenteHabilidad h : o.getOferenteHabilidads()) {
+
+            HabilidadDTO habilidadDTO = new HabilidadDTO();
+
+            habilidadDTO.setNombre(
+                    h.getIdCaracteristica().getNombre()
+            );
+
+            habilidadDTO.setNivel(
+                    h.getNivel()
+            );
+
+            habilidades.add(habilidadDTO);
+        }
+
+        dto.setHabilidades(habilidades);
 
         return dto;
     }
