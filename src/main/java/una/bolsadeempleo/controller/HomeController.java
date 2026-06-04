@@ -94,16 +94,6 @@ public class HomeController {
             req.getSession().setAttribute("usuario", root);
             return "login";
         }
-/*
-        if (req.getParameter("correo").equals("admin@admin.com") &&
-                req.getParameter("password").equals("123")) {
-            Usuario admin = new Usuario();
-            admin.setCorreo("admin@admin.com");
-            admin.setRol("ADMIN");
-            req.getSession().setAttribute("usuario", admin);
-
-            return "redirect:/admin/dashboard";
-        }*/
 
         Usuario usuario = service.login(req.getParameter("correo"), req.getParameter("password"));
         if (usuario != null && Boolean.TRUE.equals(usuario.getAprobado())) {

@@ -58,20 +58,6 @@ public class EmpresaController {
         return "redirect:/login";
     }
 
-    //buscar candidato
-
-    /*@GetMapping("/candidatos/{idPuesto}")
-    public String buscarCandidatos(@PathVariable Integer idPuesto, Model model) {
-
-        var candidatos = service.buscarCandidatosParaPuesto(idPuesto);
-        var puesto = service.obtenerPuesto(idPuesto);
-
-        model.addAttribute("puesto", puesto);
-        model.addAttribute("candidatos", candidatos);
-
-        return "empresa/candidatos";
-    }*/
-
     @GetMapping("/candidatos/detalle/{idOferente}")
     public String verDetalle(@PathVariable Integer idOferente,
                              Model model) {
