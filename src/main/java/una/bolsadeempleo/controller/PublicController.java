@@ -58,4 +58,20 @@ public class PublicController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/registro-empresa")
+    public ResponseEntity<Void> registrarEmpresa(
+            @RequestBody Map<String, String> body
+    ) {
+
+        service.guardarEmpresa(
+                body.get("correo"),
+                body.get("nombre"),
+                body.get("localizacion"),
+                body.get("telefono"),
+                body.get("descripcion")
+        );
+
+        return ResponseEntity.ok().build();
+    }
+
 }

@@ -45,7 +45,7 @@ public class EmpresaController {
     }
 
     // Guardar en BD
-    @PostMapping("/guardar")
+    /*@PostMapping("/guardar")
     public String guardarEmpresa(@RequestParam String correo,
                                  @RequestParam String password,
                                  @RequestParam String nombre,
@@ -56,7 +56,7 @@ public class EmpresaController {
         service.guardarEmpresa(correo, password, nombre, localizacion, telefono, descripcion);
 
         return "redirect:/login";
-    }
+    }*/
 
     @GetMapping("/candidatos/detalle/{idOferente}")
     public String verDetalle(@PathVariable Integer idOferente,

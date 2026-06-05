@@ -296,14 +296,14 @@ public class Service {
     public List<Empresa> listarEmpresasPendientes() {
         return empresaRepository.findByIdUsuarioAprobadoFalse();
     }
-    public void guardarEmpresa(String correo, String password,
+    public void guardarEmpresa(String correo,
                                String nombre, String localizacion,
                                String telefono, String descripcion) {
 
         // crear usuario
         Usuario usuario = new Usuario();
         usuario.setCorreo(correo);
-        usuario.setPasswordHash(password);
+        usuario.setPasswordHash(null);
         usuario.setRol("EMPRESA");
         usuario.setAprobado(false);
 

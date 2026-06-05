@@ -16,6 +16,7 @@ import Reportes from "./pages/admin/Reportes.jsx";
 import Candidatos from "./pages/empresa/Candidatos";
 import Habilidades from "./pages/oferente/Habilidades";
 import RegistroOferente from "./pages/RegistroOferente";
+import RegistroEmpresa from "./pages/RegistroEmpresa";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
                     <Route path="/oferente" element={<OferenteDashboard/>}/>
                     <Route path="oferente/habilidades" element={<Habilidades/>}/>
                     <Route path="oferente/registro-oferente" element={<RegistroOferente />}/>
+                    <Route path="/empresa/registro-empresa" element={<RegistroEmpresa />}/>
                     <Route path="*" element={<h1>404 Not Found</h1>} />
                 </Routes>
             </MainLayout>
