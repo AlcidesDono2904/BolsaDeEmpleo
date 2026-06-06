@@ -64,7 +64,7 @@ public class PuestoRestController {
         );
     }
 
-    @PutMapping("/puestos/desactivar/{id}")
+    @PutMapping("/desactivar/{id}")
     public void desactivarPuesto(@PathVariable Integer id,
                                  Authentication authentication) {
 
